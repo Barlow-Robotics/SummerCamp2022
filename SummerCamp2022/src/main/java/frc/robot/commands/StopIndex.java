@@ -5,10 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Index;
+import frc.robot.Constants;
 
 public class StopIndex extends CommandBase {
+
+  private Index m_index;
+
   /** Creates a new StopIndex. */
-  public StopIndex() {
+  public StopIndex(Index i) {
+    i = m_index;
+    addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

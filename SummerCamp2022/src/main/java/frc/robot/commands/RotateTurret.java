@@ -5,10 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Shooter;
 
-public class SpinTurret extends CommandBase {
+public class RotateTurret extends CommandBase {
+
+  private Shooter m_shooter;
+
   /** Creates a new SpinTurret. */
-  public SpinTurret() {
+  public RotateTurret(Shooter s) {
+    s = m_shooter;
+    addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

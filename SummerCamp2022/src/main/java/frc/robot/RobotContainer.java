@@ -4,6 +4,14 @@
 
 package frc.robot;
 
+import frc.robot.commands.AdjustTurretHoodAngle;
+import frc.robot.commands.AlignWithTarget;
+import frc.robot.commands.RotateTurret;
+import frc.robot.commands.StartIndex;
+import frc.robot.commands.StartShooting;
+import frc.robot.commands.StartSpinningHopper;
+import frc.robot.commands.TurnOffLEDs;
+import frc.robot.commands.TurnOnLEDs;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
@@ -22,9 +30,21 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveSubsystem m_drive = new DriveSubsystem();
+  private final Index m_index = new Index();
+  private final Shooter m_shooter = new Shooter();
+  private final UnderGlow m_underGlow = new UnderGlow();
+  private final Vision m_vision = new Vision();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_shooter, m_vision);
+  private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_shooter);
+  private final RotateTurret rotateTurretCommand = new RotateTurret(m_shooter);
+  private final StartIndex startIndexCommand = new StartIndex(m_index);
+  private final StartShooting startShootingCommand = new StartShooting(m_shooter);
+  private final StartSpinningHopper startSpinningHopperCommand = new StartSpinningHopper(m_index);
+  private final TurnOffLEDs turnOffLEDsCommand = new TurnOffLEDs(m_underGlow);
+  private final TurnOnLEDs turnOnLEDsCommand = new TurnOnLEDs(m_underGlow);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

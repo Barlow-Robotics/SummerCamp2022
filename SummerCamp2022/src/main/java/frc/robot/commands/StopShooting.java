@@ -5,10 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Shooter;
+import frc.robot.Constants;
 
 public class StopShooting extends CommandBase {
+
+  private Shooter m_shooter;
+
   /** Creates a new StopShooting. */
-  public StopShooting() {
+  public StopShooting(Shooter s) {
+    s = m_shooter;
+    addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

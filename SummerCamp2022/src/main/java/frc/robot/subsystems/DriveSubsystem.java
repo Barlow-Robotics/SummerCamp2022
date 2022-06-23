@@ -6,6 +6,12 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
+import java.util.ArrayList;
+
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -14,44 +20,28 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 /** Represents a differential drive style drivetrain. */
 public class DriveSubsystem {
-  public static final double kMaxSpeed = 3.0; // meters per second
-  public static final double kMaxAngularSpeed = 2 * Math.PI; // one rotation per second
-
-  private static final double kTrackWidth = 0.381 * 2; // meters
-  private static final double kWheelRadius = 0.0508; // meters
-  private static final int kEncoderResolution = 4096;
-
-  private final MotorController m_leftLeader = new PWMSparkMax(1);
-  private final MotorController m_leftFollower = new PWMSparkMax(2);
-  private final MotorController m_rightLeader = new PWMSparkMax(3);
-  private final MotorController m_rightFollower = new PWMSparkMax(4);
-
-  private final Encoder m_leftEncoder = new Encoder(0, 1);
-  private final Encoder m_rightEncoder = new Encoder(2, 3);
-
-  private final MotorControllerGroup m_leftGroup =
-      new MotorControllerGroup(m_leftLeader, m_leftFollower);
-  private final MotorControllerGroup m_rightGroup =
-      new MotorControllerGroup(m_rightLeader, m_rightFollower);
+  WPI_TalonSRX m_leftLeader;
+  WPI_VictorSPX m_leftFollower;
+  WPI_TalonSRX m_rightLeader;
+  WPI_VictorSPX m_rightFollower;
+  
+  DifferentialDrive diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
 
   private final AnalogGyro m_gyro = new AnalogGyro(0);
 
-  private final PIDController m_leftPIDController = new PIDController(1, 0, 0);
-  private final PIDController m_rightPIDController = new PIDController(1, 0, 0);
-
   private final DifferentialDriveKinematics m_kinematics =
-      new DifferentialDriveKinematics(kTrackWidth);
+      new DifferentialDriveKinematics(Constants.DriveConstants.kTrackWidth);
 
   private final DifferentialDriveOdometry m_odometry;
 
   // Gains are for example purposes only - must be determined for your own robot!
-  private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
+  //private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
 
   /**
    * Constructs a differential drive object. Sets the encoder distance per pulse and resets the
@@ -59,20 +49,6 @@ public class DriveSubsystem {
    */
   public DriveSubsystem() {
     m_gyro.reset();
-
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
-    m_rightGroup.setInverted(true);
-
-    // Set the distance per pulse for the drive encoders. We can simply use the
-    // distance traveled for one rotation of the wheel divided by the encoder
-    // resolution.
-    m_leftEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
-    m_rightEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
-
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
 
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
@@ -83,15 +59,8 @@ public class DriveSubsystem {
    * @param speeds The desired wheel speeds.
    */
   public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    final double leftFeedforward = m_feedforward.calculate(speeds.leftMetersPerSecond);
-    final double rightFeedforward = m_feedforward.calculate(speeds.rightMetersPerSecond);
-
-    final double leftOutput =
-        m_leftPIDController.calculate(m_leftEncoder.getRate(), speeds.leftMetersPerSecond);
-    final double rightOutput =
-        m_rightPIDController.calculate(m_rightEncoder.getRate(), speeds.rightMetersPerSecond);
-    m_leftGroup.setVoltage(leftOutput + leftFeedforward);
-    m_rightGroup.setVoltage(rightOutput + rightFeedforward);
+    m_leftLeader.setVoltage(leftOutput + leftFeedforward);
+    m_rightLeader.setVoltage(rightOutput + rightFeedforward);
   }
 
   /**
@@ -109,6 +78,29 @@ public class DriveSubsystem {
   /** Updates the field-relative position. */
   public void updateOdometry() {
     m_odometry.update(
-        m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+        m_gyro.getRotation2d(), 
+        new DifferentialDriveWheelSpeeds(
+          getSpeed(m_leftLeader), 
+          getSpeed(m_rightLeader)
+        )
+      );
+  }
+
+  private void setMotorConfig() {
+    m_leftLeader.configFactoryDefault();
+    m_leftFollower.configFactoryDefault();
+    m_rightLeader.configFactoryDefault();
+    m_rightFollower.configFactoryDefault();
+
+    m_leftFollower.follow(m_leftLeader);
+    m_rightFollower.follow(m_rightLeader);
+
+    m_leftLeader.setInverted(TalonSRXInvertType.CounterClockwise);
+    m_rightLeader.setInverted(TalonSRXInvertType.Clockwise);
+    
+    m_leftFollower.setInverted(InvertType.FollowMaster);
+    m_rightFollower.setInverted(InvertType.FollowMaster);
+
+    diffDrive.setRightSideInverted(false);
   }
 }

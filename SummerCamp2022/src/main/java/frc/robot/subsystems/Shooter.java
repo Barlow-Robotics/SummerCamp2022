@@ -5,12 +5,19 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
-  public Shooter() {}
+
+WPI_TalonSRX flyWheelMotor;
+
+
+  public Shooter() {
+    flyWheelMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_FlyWheelMotor)
+
+  }
 
   @Override
   public void periodic() {
