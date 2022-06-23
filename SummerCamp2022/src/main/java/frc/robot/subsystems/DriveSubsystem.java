@@ -33,6 +33,8 @@ public class DriveSubsystem {
   
   DifferentialDrive diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
 
+  diffDrive.arcadeDrive(forw, turn);
+
   private final AnalogGyro m_gyro = new AnalogGyro(0);
 
   private final DifferentialDriveKinematics m_kinematics =
@@ -59,8 +61,8 @@ public class DriveSubsystem {
    * @param speeds The desired wheel speeds.
    */
   public void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    m_leftLeader.setVoltage(leftOutput + leftFeedforward);
-    m_rightLeader.setVoltage(rightOutput + rightFeedforward);
+    m_leftLeader.setVoltage(Constants.DriveConstants.DriveSpeed);
+    m_rightLeader.setVoltage(Constants.DriveConstants.DriveSpeed);
   }
 
   /**
@@ -79,10 +81,10 @@ public class DriveSubsystem {
   public void updateOdometry() {
     m_odometry.update(
         m_gyro.getRotation2d(), 
-        new DifferentialDriveWheelSpeeds(
+        // new DifferentialDriveWheelSpeeds(
           getSpeed(m_leftLeader), 
           getSpeed(m_rightLeader)
-        )
+        // )
       );
   }
 

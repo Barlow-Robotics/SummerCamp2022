@@ -26,14 +26,18 @@ public final class Constants {
         public static final double kWheelRadius = 0.0508; // meters
         public static final int kEncoderResolution = 4096;
 
+        // Are these the same thing? Do we need both?
         public static final double Speed = 0.5;
+        public static final double DriveSpeed = 0.5;
     }
 
     public static final class IndexConstants {
     }
 
     public static final class ShooterConstants {
+        // IDs are placeholders
         public static final int ID_FlyWheelMotor = 1;
+        public static final int ID_HoodMotor = 2;
     }
 
     public static final class UnderGlowConstants {

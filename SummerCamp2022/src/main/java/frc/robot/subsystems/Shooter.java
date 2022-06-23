@@ -6,16 +6,21 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Shooter extends SubsystemBase {
-  /** Creates a new Shooter. */
+  // Creates a new Shooter
 
 WPI_TalonSRX flyWheelMotor;
+WPI_TalonSRX hoodMotor;
 
+boolean isShooting = false;
 
   public Shooter() {
-    flyWheelMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_FlyWheelMotor)
+    flyWheelMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_FlyWheelMotor);
+    hoodMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_HoodMotor);
 
   }
 
