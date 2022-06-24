@@ -22,12 +22,18 @@ public final class Constants {
         // All variables are placeholders 
         public static final double kMaxSpeed = 3.0; // meters per second
         public static final double kMaxAngularSpeed = 2 * Math.PI; // one rotation per second
+        public static final double DriveSpeed = 0.5;
 
         public static final double kTrackWidth = 0.381 * 2; // meters
         public static final double kWheelRadius = 0.0508; // meters
         public static final int kEncoderResolution = 4096;
-
-        public static final double DriveSpeed = 0.5;
+        
+        public static final double Gear_Ratio = 10.71;
+        public static final double Counts_Per_Revolution = 2048.0 * Gear_Ratio;
+        public static final double InchesToMeters = 0.0254;
+        public static final double Wheel_Diameter = 6.0 * InchesToMeters;
+        public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
+        public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
 
         public static int ID_leftLeaderMotor = 3;
         public static int ID_leftFollowerMotor = 4;
