@@ -6,14 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.UnderGlow;
-import frc.robot.Constants;
 
-public class TurnOffLEDs extends CommandBase {
+public class TurnOnUnderGlow extends CommandBase {
 
   private UnderGlow m_underGlow;
 
-  /** Creates a new TurnOffLEDs. */
-  public TurnOffLEDs(UnderGlow g) {
+  /** Creates a new TurnOnLEDs. */
+  public TurnOnUnderGlow(UnderGlow g) {
     g = m_underGlow;
     addRequirements(m_underGlow);
     // Use addRequirements() here to declare subsystem dependencies.

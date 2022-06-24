@@ -7,29 +7,39 @@ package frc.robot;
 import frc.robot.commands.AdjustTurretHoodAngle;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.RotateTurret;
-import frc.robot.commands.StartIndex;
+import frc.robot.commands.StartIndexAndHopper;
 import frc.robot.commands.StartShooting;
-import frc.robot.commands.StartSpinningHopper;
-import frc.robot.commands.TurnOffLEDs;
-import frc.robot.commands.TurnOnLEDs;
+import frc.robot.commands.StopIndexAndHopper;
+import frc.robot.commands.StopShooting;
+import frc.robot.commands.TurnOffUnderGlow;
+import frc.robot.commands.TurnOnUnderGlow;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.UnderGlow;
 import frc.robot.subsystems.Vision;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
   private final DriveSubsystem m_drive = new DriveSubsystem();
   private final Index m_index = new Index();
   private final Shooter m_shooter = new Shooter();
@@ -39,26 +49,99 @@ public class RobotContainer {
   private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_shooter, m_vision);
   private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_shooter);
   private final RotateTurret rotateTurretCommand = new RotateTurret(m_shooter);
-  private final StartIndex startIndexCommand = new StartIndex(m_index);
+  private final StartIndexAndHopper startIndexAndHopperCommand = new StartIndexAndHopper(m_index);
   private final StartShooting startShootingCommand = new StartShooting(m_shooter);
-  private final StartSpinningHopper startSpinningHopperCommand = new StartSpinningHopper(m_index);
-  private final TurnOffLEDs turnOffLEDsCommand = new TurnOffLEDs(m_underGlow);
-  private final TurnOnLEDs turnOnLEDsCommand = new TurnOnLEDs(m_underGlow);
-  
+  private final StopShooting stopShootingCommand = new StopShooting(m_shooter);
+  private final StopIndexAndHopper stopIndexAndHopperCommand = new StopIndexAndHopper(m_index);
+  private final TurnOffUnderGlow turnOffUnderGlowCommand = new TurnOffUnderGlow(m_underGlow);
+  private final TurnOnUnderGlow turnOnUnderGlowCommand = new TurnOnUnderGlow(m_underGlow);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  Joystick m_driverController; // Joystick 1
+  Joystick m_operatorController; // Joystick 2
+
+  private JoystickButton alignWithTargetButton;
+  private JoystickButton indexAndHopperButton;
+  private JoystickButton shooterButton;
+
+  // HashMap<String, PathPlannerTrajectory> trajectories;
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    // loadTrajectories();
+    // createAutonomousCommands();
+
+    m_drive.setDefaultCommand(
+        // A split-stick arcade command, with forward/backward controlled by the left
+        // hand, and turning controlled by the right.
+        new RunCommand( // new instance
+            () -> {
+              double x = -m_driverController.getRawAxis(Constants.Logitech_F310_Controller.Left_Stick_Y);
+              double yaw = m_driverController.getRawAxis(Constants.Logitech_F310_Controller.Right_Stick_X);
+              // fancy exponential formulas to shape the controller inputs to be flat when
+              // only
+              // pressed a little, and ramp up as stick pushed more.
+              double speed = 0.0;
+              if (x != 0) {
+                speed = (Math.abs(x) / x) * (Math.exp(-400.0 * Math.pow(x / 3.0, 4.0)))
+                    + (-Math.abs(x) / x);
+              }
+              double turn = 0.0;
+              if (yaw != 0) {
+                turn = (Math.abs(yaw) / yaw) * (Math.exp(-400.0 * Math.pow(yaw / 3.0, 4.0)))
+                    + (-Math.abs(yaw) / yaw);
+              }
+              // The turn input results in really quick movement of the bot, so
+              // let's reduce the turn input and make it even less if we are going faster
+              // This is a simple y = mx + b equation to adjust the turn input based on the
+              // speed.
+              turn = turn * (-0.4 * Math.abs(speed) + 0.5);
+
+              m_drive.drive(-speed, -turn * 0.4, false);
+            },
+            m_drive));
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    if (m_driverController == null) {
+      System.out.println("Null driver controller, using joystick 1");
+      m_driverController = new Joystick(1);
+    }
+
+    if (m_operatorController == null) {
+      System.out.println("Null operator controller, using joystick 2");
+      m_operatorController = new Joystick(2);
+    }
+
+    String controllerType = m_driverController.getName();
+    System.out.println("The controller name is " + controllerType);
+    boolean controllerFound = false;
+
+    alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Button_B);
+    indexAndHopperButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Left_Bumper);
+    shooterButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Right_Bumper);
+
+    alignWithTargetButton.whenPressed(alignWithTargetCommand);
+    indexAndHopperButton.whenPressed(startIndexAndHopperCommand).whenReleased(stopIndexAndHopperCommand);
+    shooterButton.whenPressed(startShootingCommand).whenReleased(stopShootingCommand);
+
+    if (m_operatorController.getPOV(0) == 0.0) {
+      m_shooter.rotateTurretPos();
+    } else if (m_operatorController.getPOV(0) == 180.0) {
+      m_shooter.rotateTurretNeg();
+    }
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

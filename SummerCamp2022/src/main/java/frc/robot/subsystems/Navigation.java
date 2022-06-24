@@ -7,12 +7,12 @@
 // import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import edu.wpi.first.wpilibj.SerialPort;
 
-// public class NavigationSubsystem extends SubsystemBase {
+// public class Navigation extends SubsystemBase {
 //     /** Creates a new NavigationSubsystem. */
 
 //     AHRS ahrs ;
 
-//     public NavigationSubsystem() {
+//     public Navigation() {
 //         ahrs = new AHRS(SerialPort.Port.kUSB1);
 //     }
 

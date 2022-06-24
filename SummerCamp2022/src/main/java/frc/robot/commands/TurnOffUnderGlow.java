@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Index;
-import frc.robot.Constants;
+import frc.robot.subsystems.UnderGlow;
 
-public class StopIndex extends CommandBase {
+public class TurnOffUnderGlow extends CommandBase {
 
-  private Index m_index;
+  private UnderGlow m_underGlow;
 
-  /** Creates a new StopIndex. */
-  public StopIndex(Index i) {
-    i = m_index;
-    addRequirements(m_index);
+  /** Creates a new TurnOffLEDs. */
+  public TurnOffUnderGlow(UnderGlow g) {
+    g = m_underGlow;
+    addRequirements(m_underGlow);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

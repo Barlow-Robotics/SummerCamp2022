@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.UnderGlow;
-import frc.robot.Constants;
+import frc.robot.subsystems.Index;
 
-public class TurnOnLEDs extends CommandBase {
+public class StopIndexAndHopper extends CommandBase {
 
-  private UnderGlow m_underGlow;
+  private Index m_index;
 
-  /** Creates a new TurnOnLEDs. */
-  public TurnOnLEDs(UnderGlow g) {
-    g = m_underGlow;
-    addRequirements(m_underGlow);
+  /** Creates a new StopIndex. */
+  public StopIndexAndHopper(Index i) {
+    i = m_index;
+    addRequirements(m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,7 +24,10 @@ public class TurnOnLEDs extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_index.stopIndex();
+    m_index.stopHopper();
+  }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
-import frc.robot.Constants;
 
 public class StopShooting extends CommandBase {
 
@@ -25,7 +24,9 @@ public class StopShooting extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_shooter.stopShooting();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
