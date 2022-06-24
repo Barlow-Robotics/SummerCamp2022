@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Vision;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AlignWithTarget extends CommandBase {
 
-  private PIDController pid = new PIDController(0.01, 0, 0);
+  private PIDController pid = new PIDController(Constants.VisionConstants.vision_kp, 0, 0);
   private Vision m_vision;
   private Shooter m_shooter;
 

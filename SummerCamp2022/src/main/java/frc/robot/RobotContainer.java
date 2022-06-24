@@ -8,7 +8,7 @@ import frc.robot.commands.AdjustTurretHoodAngle;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.StartIndexAndHopper;
-import frc.robot.commands.StartShooting;
+import frc.robot.commands.StartIndexAndShooting;
 import frc.robot.commands.StopIndexAndHopper;
 import frc.robot.commands.StopShooting;
 import frc.robot.commands.TurnOffUnderGlow;
@@ -50,7 +50,7 @@ public class RobotContainer {
   private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_shooter);
   private final RotateTurret rotateTurretCommand = new RotateTurret(m_shooter);
   private final StartIndexAndHopper startIndexAndHopperCommand = new StartIndexAndHopper(m_index);
-  private final StartShooting startShootingCommand = new StartShooting(m_shooter);
+  private final StartIndexAndShooting startShootingCommand = new StartIndexAndShooting(m_shooter);
   private final StopShooting stopShootingCommand = new StopShooting(m_shooter);
   private final StopIndexAndHopper stopIndexAndHopperCommand = new StopIndexAndHopper(m_index);
   private final TurnOffUnderGlow turnOffUnderGlowCommand = new TurnOffUnderGlow(m_underGlow);
@@ -136,11 +136,11 @@ public class RobotContainer {
     indexAndHopperButton.whenPressed(startIndexAndHopperCommand).whenReleased(stopIndexAndHopperCommand);
     shooterButton.whenPressed(startShootingCommand).whenReleased(stopShootingCommand);
 
-    if (m_operatorController.getPOV(0) == 0.0) {
-      m_shooter.rotateTurretPos();
-    } else if (m_operatorController.getPOV(0) == 180.0) {
-      m_shooter.rotateTurretNeg();
-    }
+    // if (m_operatorController.getPOV(0) == 0.0) {
+    //   m_shooter.rotateTurretPos();
+    // } else if (m_operatorController.getPOV(0) == 180.0) {
+    //   m_shooter.rotateTurretNeg();
+    // }
   }
 
   /**

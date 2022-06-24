@@ -8,21 +8,23 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Shooter extends SubsystemBase {
   // Creates a new Shooter
 
-  WPI_TalonSRX shootMotor;
+  WPI_TalonFX shootMotor;
   WPI_TalonSRX hoodMotor;
   WPI_TalonSRX rotateMotor;
 
   boolean isShooting = false;
 
   public Shooter() {
-    shootMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_FlyWheelMotor);
+    shootMotor = new WPI_TalonFX(Constants.ShooterConstants.ID_FlyWheelMotor);
     hoodMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_HoodMotor);
     rotateMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_RotateMotor);
 
@@ -32,12 +34,12 @@ public class Shooter extends SubsystemBase {
   }
 
   public void startShooting() {
-    shootMotor.set(TalonSRXControlMode.Velocity, Constants.ShooterConstants.shootMotorVelocity);
+    shootMotor.set(TalonFXControlMode.Velocity, Constants.ShooterConstants.shootMotorVelocity);
     isShooting = true;
   }
 
   public void stopShooting() {
-    shootMotor.set(TalonSRXControlMode.Velocity, 0);
+    shootMotor.set(TalonFXControlMode.Velocity, 0);
     isShooting = false;
   }
 
@@ -63,6 +65,17 @@ public class Shooter extends SubsystemBase {
   }
 
   private void setMotorConfig(WPI_TalonSRX motor) {
+    motor.configFactoryDefault();
+    motor.configClosedloopRamp(Constants.ShooterConstants.closedVoltageRampingConstant);
+    motor.configOpenloopRamp(Constants.ShooterConstants.manualVoltageRampingConstant);
+    motor.config_kF(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.kF);
+    motor.config_kP(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.kP);
+    motor.config_kI(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.kI);
+    motor.config_kD(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.kD);
+    motor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  private void setMotorConfig(WPI_TalonFX motor) {
     motor.configFactoryDefault();
     motor.configClosedloopRamp(Constants.ShooterConstants.closedVoltageRampingConstant);
     motor.configOpenloopRamp(Constants.ShooterConstants.manualVoltageRampingConstant);

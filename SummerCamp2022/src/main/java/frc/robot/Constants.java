@@ -76,6 +76,9 @@ public final class Constants {
     }
 
     public static final class VisionConstants {
+        public static final double vision_kp = 0.005;
+        public static final double vision_ki = 0;
+        public static final double vision_kd = 0;
     }
 
     public static final class AutoConstants {
