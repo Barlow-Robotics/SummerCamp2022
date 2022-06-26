@@ -7,9 +7,8 @@ package frc.robot;
 import frc.robot.commands.AdjustTurretHoodAngle;
 import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.RotateTurret;
-import frc.robot.commands.StartIndexAndHopper;
-import frc.robot.commands.StartIndexAndShooting;
-import frc.robot.commands.StopIndexAndHopper;
+import frc.robot.commands.StartIndexAndShooter;
+import frc.robot.commands.StopIndexAndShooter;
 import frc.robot.commands.StopShooting;
 import frc.robot.commands.TurnOffUnderGlow;
 import frc.robot.commands.TurnOnUnderGlow;
@@ -49,10 +48,8 @@ public class RobotContainer {
   private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_shooter, m_vision);
   private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_shooter);
   private final RotateTurret rotateTurretCommand = new RotateTurret(m_shooter);
-  private final StartIndexAndHopper startIndexAndHopperCommand = new StartIndexAndHopper(m_index);
-  private final StartIndexAndShooting startShootingCommand = new StartIndexAndShooting(m_shooter);
-  private final StopShooting stopShootingCommand = new StopShooting(m_shooter);
-  private final StopIndexAndHopper stopIndexAndHopperCommand = new StopIndexAndHopper(m_index);
+  private final StartIndexAndShooter startIndexAndShooterCommand = new StartIndexAndShooter(m_shooter, m_index);
+  private final StopIndexAndShooter stopIndexAndShooterCommand = new StopIndexAndShooter(m_index, m_shooter);
   private final TurnOffUnderGlow turnOffUnderGlowCommand = new TurnOffUnderGlow(m_underGlow);
   private final TurnOnUnderGlow turnOnUnderGlowCommand = new TurnOnUnderGlow(m_underGlow);
 
@@ -60,8 +57,7 @@ public class RobotContainer {
   Joystick m_operatorController; // Joystick 2
 
   private JoystickButton alignWithTargetButton;
-  private JoystickButton indexAndHopperButton;
-  private JoystickButton shooterButton;
+  private JoystickButton indexAndShooterButton;
 
   // HashMap<String, PathPlannerTrajectory> trajectories;
 
@@ -126,15 +122,13 @@ public class RobotContainer {
 
     String controllerType = m_driverController.getName();
     System.out.println("The controller name is " + controllerType);
-    boolean controllerFound = false;
+    //boolean controllerFound = false;
 
     alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Button_B);
-    indexAndHopperButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Left_Bumper);
-    shooterButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Right_Bumper);
+    indexAndShooterButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Right_Bumper);
 
     alignWithTargetButton.whenPressed(alignWithTargetCommand);
-    indexAndHopperButton.whenPressed(startIndexAndHopperCommand).whenReleased(stopIndexAndHopperCommand);
-    shooterButton.whenPressed(startShootingCommand).whenReleased(stopShootingCommand);
+    indexAndShooterButton.whenPressed(startIndexAndShooterCommand).whenReleased(stopIndexAndShooterCommand);
 
     // if (m_operatorController.getPOV(0) == 0.0) {
     //   m_shooter.rotateTurretPos();

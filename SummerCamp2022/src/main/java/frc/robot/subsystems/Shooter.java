@@ -10,36 +10,35 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Shooter extends SubsystemBase {
   // Creates a new Shooter
 
-  WPI_TalonFX shootMotor;
+  WPI_TalonFX flywheelMotor;
   WPI_TalonSRX hoodMotor;
   WPI_TalonSRX rotateMotor;
 
   boolean isShooting = false;
 
   public Shooter() {
-    shootMotor = new WPI_TalonFX(Constants.ShooterConstants.ID_FlyWheelMotor);
+    flywheelMotor = new WPI_TalonFX(Constants.ShooterConstants.ID_FlyWheelMotor);
     hoodMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_HoodMotor);
     rotateMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_RotateMotor);
 
-    setMotorConfig(shootMotor);
+    setMotorConfig(flywheelMotor);
     setMotorConfig(hoodMotor);
     setMotorConfig(rotateMotor);
   }
 
   public void startShooting() {
-    shootMotor.set(TalonFXControlMode.Velocity, Constants.ShooterConstants.shootMotorVelocity);
+    flywheelMotor.set(TalonFXControlMode.Velocity, Constants.ShooterConstants.shootMotorVelocity);
     isShooting = true;
   }
 
   public void stopShooting() {
-    shootMotor.set(TalonFXControlMode.Velocity, 0);
+    flywheelMotor.set(TalonFXControlMode.Velocity, 0);
     isShooting = false;
   }
 
@@ -57,6 +56,11 @@ public class Shooter extends SubsystemBase {
 
   public void rotateTurretNeg() {
     rotateMotor.set(TalonSRXControlMode.Velocity, -Constants.ShooterConstants.ManualRotateTurretSpeed);
+  }
+
+  public double getFlywheelSpeed() {
+    double s = flywheelMotor.getSelectedSensorVelocity() * 10.0 * Constants.ShooterConstants.Meters_Per_Count;
+    return (s); 
   }
 
   @Override

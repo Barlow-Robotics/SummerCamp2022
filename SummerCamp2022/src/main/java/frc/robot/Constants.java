@@ -70,6 +70,13 @@ public final class Constants {
         public static final double manualVoltageRampingConstant = 0.0;
         public static final double ManualHoodAdjustmentSpeed = 0;
         public static final double ManualRotateTurretSpeed = 0;
+        
+        public static final double Gear_Ratio = 10.71;
+        public static final double Counts_Per_Revolution = 2048.0 * Gear_Ratio;
+        public static final double InchesToMeters = 0.0254;
+        public static final double Wheel_Diameter = 6.0 * InchesToMeters;
+        public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
+        public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
     }
 
     public static final class UnderGlowConstants {

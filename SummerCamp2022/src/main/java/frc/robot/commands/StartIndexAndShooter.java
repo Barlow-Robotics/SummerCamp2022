@@ -5,16 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
 
-public class StartIndexAndShooting extends CommandBase {
+public class StartIndexAndShooter extends CommandBase {
 
   private Shooter m_shooter;
+  private Index m_index;
 
   /** Creates a new StartShooting. */
-  public StartIndexAndShooting(Shooter s) {
+  public StartIndexAndShooter(Shooter s, Index i) {
     s = m_shooter;
-    addRequirements(m_shooter);
+    i = m_index;
+    addRequirements(m_shooter, m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,6 +31,11 @@ public class StartIndexAndShooting extends CommandBase {
   @Override
   public void execute() {
     m_shooter.startShooting();
+
+    if(m_shooter.getFlywheelSpeed() == (0.95*Constants.ShooterConstants.shootMotorVelocity)) {
+      m_index.startIndex();
+      m_index.startHopper();
+    }
   }
 
   // Called once the command ends or is interrupted.

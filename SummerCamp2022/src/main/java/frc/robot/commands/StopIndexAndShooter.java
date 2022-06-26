@@ -6,15 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Shooter;
 
-public class StopIndexAndHopper extends CommandBase {
+public class StopIndexAndShooter extends CommandBase {
 
   private Index m_index;
+  private Shooter m_shooter;
 
   /** Creates a new StopIndex. */
-  public StopIndexAndHopper(Index i) {
+  public StopIndexAndShooter(Index i, Shooter s) {
     i = m_index;
-    addRequirements(m_index);
+    s = m_shooter;
+    addRequirements(m_shooter, m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,6 +28,7 @@ public class StopIndexAndHopper extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_shooter.stopShooting();
     m_index.stopIndex();
     m_index.stopHopper();
   }
