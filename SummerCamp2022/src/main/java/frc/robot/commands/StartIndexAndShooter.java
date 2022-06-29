@@ -16,10 +16,10 @@ public class StartIndexAndShooter extends CommandBase {
 
   /** Creates a new StartShooting. */
   public StartIndexAndShooter(Shooter s, Index i) {
-    s = m_shooter;
-    i = m_index;
+    m_shooter = s;
+    m_index = i;
     addRequirements(m_shooter, m_index);
-    // Use addRequirements() here to declare subsystem dependencies.
+    // Use addRequirements() here to dclare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.

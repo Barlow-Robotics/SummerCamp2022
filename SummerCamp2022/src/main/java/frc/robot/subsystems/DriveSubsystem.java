@@ -27,7 +27,7 @@ public class DriveSubsystem extends SubsystemBase {
   WPI_TalonSRX m_rightLeader;
   WPI_VictorSPX m_rightFollower;
 
-  DifferentialDrive diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
+  DifferentialDrive diffDrive;
 
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftFollower = new WPI_VictorSPX(Constants.DriveConstants.ID_leftFollowerMotor);
     m_rightLeader = new WPI_TalonSRX(Constants.DriveConstants.ID_rightLeaderMotor);
     m_rightFollower = new WPI_VictorSPX(Constants.DriveConstants.ID_rightFollowerMotor);
-
+    
     // Config Motors 
     m_leftLeader.configFactoryDefault();
     m_rightLeader.configFactoryDefault();
@@ -62,6 +62,8 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightLeader.setInverted(InvertType.InvertMotorOutput);
     m_rightFollower.setInverted(InvertType.FollowMaster);
 
+    diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
+    
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
     setDefaultNeutralMode();

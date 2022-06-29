@@ -13,7 +13,7 @@ public class RotateTurret extends CommandBase {
 
   /** Creates a new SpinTurret. */
   public RotateTurret(Shooter s) {
-    s = m_shooter;
+    m_shooter = s;
     addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }

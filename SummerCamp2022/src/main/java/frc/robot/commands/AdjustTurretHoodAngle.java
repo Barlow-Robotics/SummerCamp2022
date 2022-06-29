@@ -13,7 +13,7 @@ public class AdjustTurretHoodAngle extends CommandBase {
 
   /** Creates a new RaiseAndLowerTurret. */
   public AdjustTurretHoodAngle(Shooter s) {
-    s = m_shooter;
+    m_shooter = s;
     addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }

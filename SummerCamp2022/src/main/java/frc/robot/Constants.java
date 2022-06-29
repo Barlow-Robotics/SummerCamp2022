@@ -77,6 +77,15 @@ public final class Constants {
         public static final double Wheel_Diameter = 6.0 * InchesToMeters;
         public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
         public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
+    
+        public static final double CorrectionRotationSpeed = 2.0 ;  // meters/sec
+        
+        public static final int UnitsPerMotorRotation = 2048;
+        public static final double GearboxGearRatio = 100.0 / 1.0; // farther gear to axel gear
+        public static final double ChainGearRatio = 42.0 / 12.0; // (or 15/12) upper gear to lower gear
+        public static final double UnitsPerArmRotation = UnitsPerMotorRotation * GearboxGearRatio * ChainGearRatio ;
+        public static final double UnitsPerArmDegree = UnitsPerArmRotation / 360.0 ;
+        public static final double DegreePerSecond = UnitsPerArmDegree / 10.0 ;
     }
 
     public static final class UnderGlowConstants {
@@ -86,11 +95,39 @@ public final class Constants {
         public static final double vision_kp = 0.005;
         public static final double vision_ki = 0;
         public static final double vision_kd = 0;
+        public static final double AlignmentTolerence = 5.0;
     }
 
     public static final class AutoConstants {
     }
 
+    public final class Logitech_Dual_Action {
+
+        // Constants for Axes
+        public static final int Left_Stick_X = 0;
+        public static final int Left_Stick_Y = 1;
+        public static final int Right_Stick_X = 2;
+        public static final int Right_Stick_Y = 3;
+
+        // Constants for buttons
+        public static final int Left_Trigger = 7;
+        public static final int Right_Trigger = 8;
+        public static final int Button_A = 2;
+        public static final int Button_B = 3;
+        public static final int Button_X = 1;
+        public static final int Button_Y = 4;
+        public static final int Left_Bumper = 5;
+        public static final int Right_Bumper = 6;
+        public static final int Back_Button = 9;
+        public static final int Start_Button = 10;
+        public static final int Left_Stick = 11;
+        public static final int Right_Stick = 12;
+
+        public static final double Forward_Axis_Attenuation = -0.5 ;
+        public static final double Lateral_Axis_Attenuation = 0.5 ;
+        public static final double Yaw_Axis_Attenuation = 0.5 ;
+    }
+    
     public final class Logitech_F310_Controller {
         // Constants for Axes
         public static final int Left_Stick_X = 0;
@@ -111,32 +148,6 @@ public final class Constants {
         public static final int Start_Button = 8;
         public static final int Left_Stick = 9;
         public static final int Right_Stick = 10;
-
-        public static final double Forward_Axis_Attenuation = -0.5 ;
-        public static final double Lateral_Axis_Attenuation = 0.5 ;
-        public static final double Yaw_Axis_Attenuation = 0.5 ;
-    }
-
-    public final class Logitech_Dual_Action {
-        // Constants for Axes
-        public static final int Left_Stick_X = 0;
-        public static final int Left_Stick_Y = 1;
-        public static final int Right_Stick_X = 2;
-        public static final int Right_Stick_Y = 3;
-
-        // Constants for buttons
-        public static final int Left_Trigger = 7;
-        public static final int Right_Trigger = 8;
-        public static final int Button_A = 2;
-        public static final int Button_B = 3;
-        public static final int Button_X = 1;
-        public static final int Button_Y = 4;
-        public static final int Left_Bumper = 5;
-        public static final int Right_Bumper = 6;
-        public static final int Back_Button = 9;
-        public static final int Start_Button = 10;
-        public static final int Left_Stick = 11;
-        public static final int Right_Stick = 12;
 
         public static final double Forward_Axis_Attenuation = -0.5 ;
         public static final double Lateral_Axis_Attenuation = 0.5 ;

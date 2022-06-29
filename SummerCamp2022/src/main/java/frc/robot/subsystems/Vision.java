@@ -20,12 +20,12 @@ public class Vision extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public boolean targetIsVisible() {
+  public boolean visionTargetIsVisible() {
     // The data for this will come from the Jetson Nano via network tables.
     return NetworkTableInstance.getDefault().getEntry("vision/vision_target_detected").getBoolean(false);
   }
 
-  public double targetDistanceFromCenter() {
+  public double visionTargetDistanceFromCenter() {
     // returns the number of pixels from the center of the screen to the center of
     // the vision target.
     // The data for this will come from the Jetson Nano via network tables.

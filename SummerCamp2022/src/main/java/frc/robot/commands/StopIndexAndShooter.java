@@ -15,8 +15,8 @@ public class StopIndexAndShooter extends CommandBase {
 
   /** Creates a new StopIndex. */
   public StopIndexAndShooter(Index i, Shooter s) {
-    i = m_index;
-    s = m_shooter;
+    m_index = i;
+    m_shooter = s;
     addRequirements(m_shooter, m_index);
     // Use addRequirements() here to declare subsystem dependencies.
   }

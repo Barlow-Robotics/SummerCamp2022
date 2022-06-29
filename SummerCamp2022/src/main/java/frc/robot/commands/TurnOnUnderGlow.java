@@ -13,7 +13,7 @@ public class TurnOnUnderGlow extends CommandBase {
 
   /** Creates a new TurnOnLEDs. */
   public TurnOnUnderGlow(UnderGlow g) {
-    g = m_underGlow;
+    m_underGlow = g;
     addRequirements(m_underGlow);
     // Use addRequirements() here to declare subsystem dependencies.
   }

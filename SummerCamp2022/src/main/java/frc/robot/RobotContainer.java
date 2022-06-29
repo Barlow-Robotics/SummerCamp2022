@@ -9,7 +9,6 @@ import frc.robot.commands.AlignWithTarget;
 import frc.robot.commands.RotateTurret;
 import frc.robot.commands.StartIndexAndShooter;
 import frc.robot.commands.StopIndexAndShooter;
-import frc.robot.commands.StopShooting;
 import frc.robot.commands.TurnOffUnderGlow;
 import frc.robot.commands.TurnOnUnderGlow;
 import frc.robot.subsystems.DriveSubsystem;
@@ -75,8 +74,8 @@ public class RobotContainer {
         // hand, and turning controlled by the right.
         new RunCommand( // new instance
             () -> {
-              double x = -m_driverController.getRawAxis(Constants.Logitech_F310_Controller.Left_Stick_Y);
-              double yaw = m_driverController.getRawAxis(Constants.Logitech_F310_Controller.Right_Stick_X);
+              double x = -m_driverController.getRawAxis(Constants.Logitech_Dual_Action.Left_Stick_Y);
+              double yaw = m_driverController.getRawAxis(Constants.Logitech_Dual_Action.Right_Stick_X);
               // fancy exponential formulas to shape the controller inputs to be flat when
               // only
               // pressed a little, and ramp up as stick pushed more.
@@ -124,8 +123,8 @@ public class RobotContainer {
     System.out.println("The controller name is " + controllerType);
     //boolean controllerFound = false;
 
-    alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Button_B);
-    indexAndShooterButton = new JoystickButton(m_operatorController, Constants.Logitech_F310_Controller.Right_Bumper);
+    alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Button_B);
+    indexAndShooterButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Right_Bumper);
 
     alignWithTargetButton.whenPressed(alignWithTargetCommand);
     indexAndShooterButton.whenPressed(startIndexAndShooterCommand).whenReleased(stopIndexAndShooterCommand);

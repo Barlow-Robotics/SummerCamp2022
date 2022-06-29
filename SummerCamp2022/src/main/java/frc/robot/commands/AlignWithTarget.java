@@ -8,6 +8,7 @@ import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AlignWithTarget extends CommandBase {
@@ -17,10 +18,7 @@ public class AlignWithTarget extends CommandBase {
   private Shooter m_shooter;
 
   private double error;
-  private double leftVelocity;
-  private double rightVelocity;
-  private int missedFrames = 0;
-  private double adjustment;
+  private boolean alignmentComplete = false;
 
   /** Creates a new AlignWithTarget. */
   public AlignWithTarget(Shooter s, Vision v) {
@@ -34,16 +32,40 @@ public class AlignWithTarget extends CommandBase {
   @Override
   public void initialize() {
     pid.reset();
-    missedFrames = 0 ;
+    alignmentComplete = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (m_vision.visionTargetIsVisible()) {
+      System.out.println("Target is visible");
+    } else {
+      System.out.println("Target is not visible");
+    }
+
+    double rotateVelocity = 0.0;
+
+    if (m_vision.visionTargetIsVisible()) {
+      error = m_vision.visionTargetDistanceFromCenter();
+      if (Math.abs(error) < Constants.VisionConstants.AlignmentTolerence) {
+        alignmentComplete = true;
+      } else {
+        double adjustment = pid.calculate(error);
+        adjustment = Math.signum(adjustment)
+            * Math.min(Math.abs(adjustment), Constants.ShooterConstants.CorrectionRotationSpeed / 4.0);
+        rotateVelocity = adjustment;
+      }
+      m_shooter.rotateTurret(rotateVelocity);
+    } else {
+      alignmentComplete = true;
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
