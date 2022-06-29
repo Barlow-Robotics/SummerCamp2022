@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.sim.PhysicsSim;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -18,6 +19,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Represents a differential drive style drivetrain. */
@@ -30,11 +32,12 @@ public class DriveSubsystem extends SubsystemBase {
   DifferentialDrive diffDrive;
 
   private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+  private final ADXRS450_GyroSim gyroSim = new ADXRS450_GyroSim(m_gyro) ;
 
-  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(
-      Constants.DriveConstants.kTrackWidth);
-
+  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.DriveConstants.kTrackWidth);
   private final DifferentialDriveOdometry m_odometry;
+
+  boolean simulationInitialized = false;
 
   // Gains are for example purposes only - must be determined for your own robot!
   // private final SimpleMotorFeedforward m_feedforward = new
@@ -188,4 +191,26 @@ public class DriveSubsystem extends SubsystemBase {
     NetworkTableInstance.getDefault().getEntry("drive/pose/y").setDouble(0.0);
     NetworkTableInstance.getDefault().getEntry("drive/pose/rotation").setDouble(0.0);
   }
+
+    public void simulationInit() {
+        PhysicsSim.getInstance().addTalonSRX(m_leftLeader, 0.75, 6800, false);
+        PhysicsSim.getInstance().addVictorSPX(m_leftFollower);
+        PhysicsSim.getInstance().addTalonSRX(m_rightLeader, 0.75, 6800, false);
+        PhysicsSim.getInstance().addVictorSPX(m_rightFollower);
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        if (!simulationInitialized) {
+            simulationInit();
+            simulationInitialized = true;
+        }
+        PhysicsSim.getInstance().run();
+
+        double headingNoise = 0.0 ; // (Math.random() - 0.5) * 4.0 ;
+//        gyroSim.setAngle(this.m_odometry.getPoseMeters().getRotation().getDegrees() + headingNoise);
+        gyroSim.setAngle(5.0);
+        gyroSim.setRate(1.0);
+        NetworkTableInstance.getDefault().getEntry("drive/gyro/getAngle").setDouble(m_gyro.getAngle());
+    }
 }

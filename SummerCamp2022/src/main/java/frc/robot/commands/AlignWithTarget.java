@@ -8,7 +8,6 @@ import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AlignWithTarget extends CommandBase {
@@ -17,6 +16,7 @@ public class AlignWithTarget extends CommandBase {
   private Vision m_vision;
   private Shooter m_shooter;
 
+  int missedFrames = 0;
   private double error;
   private boolean alignmentComplete = false;
 
@@ -32,6 +32,7 @@ public class AlignWithTarget extends CommandBase {
   @Override
   public void initialize() {
     pid.reset();
+    missedFrames = 0;
     alignmentComplete = false;
   }
 
@@ -57,19 +58,27 @@ public class AlignWithTarget extends CommandBase {
         rotateVelocity = adjustment;
       }
       m_shooter.rotateTurret(rotateVelocity);
-    } else {
       alignmentComplete = true;
+    } else {
+      alignmentComplete = false;
+      missedFrames++;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_shooter.rotateTurret(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (missedFrames > 10){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.sim.PhysicsSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -20,6 +21,7 @@ public class Shooter extends SubsystemBase {
   WPI_TalonSRX m_rotateMotor;
 
   boolean isShooting = false;
+  boolean simulationInitialized = false;
 
   public Shooter() {
     m_flywheelMotor = new WPI_TalonFX(Constants.ShooterConstants.ID_FlyWheelMotor);
@@ -79,5 +81,19 @@ public class Shooter extends SubsystemBase {
     motor.config_kI(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.kI);
     motor.config_kD(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.kD);
     motor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void simulationInit() {
+    PhysicsSim.getInstance().addTalonFX(m_flywheelMotor, 0.5, 6800);  
+    PhysicsSim.getInstance().addTalonSRX(m_rotateMotor, 0.5, 6800);
+    PhysicsSim.getInstance().addTalonSRX(m_hoodMotor, 0.5, 6800);
+    }
+
+  @Override
+  public void simulationPeriodic() {
+      if (!simulationInitialized) {
+          simulationInit();
+          simulationInitialized = true;
+      }
   }
 }

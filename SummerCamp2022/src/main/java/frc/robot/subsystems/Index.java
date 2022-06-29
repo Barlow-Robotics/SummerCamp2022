@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.sim.PhysicsSim;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
@@ -14,18 +15,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Index extends SubsystemBase {
 
-  WPI_TalonSRX hopperMotor;
-  WPI_TalonSRX conveyorMotor;
+  WPI_TalonSRX m_hopperMotor;
+  WPI_TalonSRX m_conveyorMotor;
 
-  boolean conveyorIsRunning = false;
+  boolean conveyorIsRunning = false;  
+  boolean simulationInitialized = false;
 
   /** Creates a new Index. */
   public Index() {
-    hopperMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_HopperMotor);
-    conveyorMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_ConveyorMotor);
+    m_hopperMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_HopperMotor);
+    m_conveyorMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_ConveyorMotor);
   
-    setMotorConfig(hopperMotor);
-    setMotorConfig(conveyorMotor);
+    setMotorConfig(m_hopperMotor);
+    setMotorConfig(m_conveyorMotor);
   }
 
   @Override
@@ -34,21 +36,21 @@ public class Index extends SubsystemBase {
   }
 
   public void startIndex() {
-    conveyorMotor.set(TalonSRXControlMode.Velocity, Constants.IndexConstants.ConveyorMotorSpeed);
+    m_conveyorMotor.set(TalonSRXControlMode.Velocity, Constants.IndexConstants.ConveyorMotorSpeed);
     conveyorIsRunning = true;
   }
 
   public void stopIndex() {
-    conveyorMotor.set(TalonSRXControlMode.Velocity, 0);
+    m_conveyorMotor.set(TalonSRXControlMode.Velocity, 0);
     conveyorIsRunning = false;
   }
   
   public void startHopper() {
-    hopperMotor.set(TalonSRXControlMode.Velocity, Constants.IndexConstants.HopperMotorSpeed);
+    m_hopperMotor.set(TalonSRXControlMode.Velocity, Constants.IndexConstants.HopperMotorSpeed);
   }
 
   public void stopHopper() {
-      hopperMotor.set(TalonSRXControlMode.Velocity, 0);
+      m_hopperMotor.set(TalonSRXControlMode.Velocity, 0);
   }
 
   private void setMotorConfig(WPI_TalonSRX motor) {
@@ -60,5 +62,18 @@ public class Index extends SubsystemBase {
     motor.config_kI(Constants.IndexConstants.PID_id, Constants.ShooterConstants.kI);
     motor.config_kD(Constants.IndexConstants.PID_id, Constants.ShooterConstants.kD);
     motor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void simulationInit() {
+      PhysicsSim.getInstance().addTalonSRX(m_conveyorMotor, 0.5, 6800);
+      PhysicsSim.getInstance().addTalonSRX(m_hopperMotor, 0.5, 6800);
+    }
+
+  @Override
+  public void simulationPeriodic() {
+      if (!simulationInitialized) {
+          simulationInit();
+          simulationInitialized = true;
+      }
   }
 }
