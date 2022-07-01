@@ -34,21 +34,21 @@ public class Shooter extends SubsystemBase {
   }
 
   public void startShooting() {
-    m_flywheelMotor.set(TalonFXControlMode.Velocity, Constants.ShooterConstants.shootMotorVelocity);
+    m_flywheelMotor.set(TalonFXControlMode.PercentOutput, Constants.ShooterConstants.shootMotorVelocity);
     isShooting = true;
   }
 
   public void stopShooting() {
-    m_flywheelMotor.set(TalonFXControlMode.Velocity, 0);
+    m_flywheelMotor.set(TalonFXControlMode.PercentOutput, 0);
     isShooting = false;
   }
 
   public void adjustTurretHoodAngle(double hoodVelocity) {
-    m_hoodMotor.set(TalonSRXControlMode.Velocity, hoodVelocity /* * Constants.DriveConstants.MotorVelocityOneMeterPerSecond*/ );
+    m_hoodMotor.set(TalonSRXControlMode.PercentOutput, hoodVelocity /* * Constants.DriveConstants.MotorVelocityOneMeterPerSecond*/ );
     }
   
   public void rotateTurret(double rotateVelocity) {
-    m_rotateMotor.set(TalonSRXControlMode.Velocity, rotateVelocity /* * Constants.DriveConstants.MotorVelocityOneMeterPerSecond*/ );
+    m_rotateMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity /* * Constants.DriveConstants.MotorVelocityOneMeterPerSecond*/ );
   }
 
   public double getFlywheelSpeed() {

@@ -49,8 +49,9 @@ public final class Constants {
 
         public static final double closedVoltageRampingConstant = 0;
         public static final double manualVoltageRampingConstant = 0;
-        public static final double HopperMotorSpeed = 0;
-        public static final double ConveyorMotorSpeed = 0;
+        
+        public static final double hopperMotorSpeed = 0.5;
+        public static final double conveyorMotorSpeed = 0.5;
     }
 
     public static final class ShooterConstants {
@@ -58,7 +59,7 @@ public final class Constants {
         public static final int ID_FlyWheelMotor = 1;
         public static final int ID_HoodMotor = 2;
         public static final int ID_RotateMotor = 0;
-        public static final double shootMotorVelocity = 0;
+        public static final double shootMotorVelocity = 0.5;
     
         public static final double kF = 0.048;
         public static final double kP = 0.001;
@@ -72,7 +73,7 @@ public final class Constants {
         public static final double ManualRotateTurretSpeed = 0;
         
         public static final double Gear_Ratio = 10.71;
-        public static final double Counts_Per_Revolution = 2048.0 * Gear_Ratio;
+        public static final double Counts_Per_Revolution = 8192.0 * Gear_Ratio;
         public static final double InchesToMeters = 0.0254;
         public static final double Wheel_Diameter = 6.0 * InchesToMeters;
         public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;

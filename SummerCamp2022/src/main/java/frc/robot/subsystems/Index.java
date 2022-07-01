@@ -36,21 +36,21 @@ public class Index extends SubsystemBase {
   }
 
   public void startIndex() {
-    m_conveyorMotor.set(TalonSRXControlMode.Velocity, Constants.IndexConstants.ConveyorMotorSpeed);
+    m_conveyorMotor.set(TalonSRXControlMode.PercentOutput, Constants.IndexConstants.conveyorMotorSpeed);
     conveyorIsRunning = true;
   }
 
   public void stopIndex() {
-    m_conveyorMotor.set(TalonSRXControlMode.Velocity, 0);
+    m_conveyorMotor.set(TalonSRXControlMode.PercentOutput, 0);
     conveyorIsRunning = false;
   }
   
   public void startHopper() {
-    m_hopperMotor.set(TalonSRXControlMode.Velocity, Constants.IndexConstants.HopperMotorSpeed);
+    m_hopperMotor.set(TalonSRXControlMode.PercentOutput, Constants.IndexConstants.hopperMotorSpeed);
   }
 
   public void stopHopper() {
-      m_hopperMotor.set(TalonSRXControlMode.Velocity, 0);
+      m_hopperMotor.set(TalonSRXControlMode.PercentOutput, 0);
   }
 
   private void setMotorConfig(WPI_TalonSRX motor) {
