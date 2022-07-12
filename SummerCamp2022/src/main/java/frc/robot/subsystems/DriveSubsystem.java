@@ -64,6 +64,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightFollower.follow(m_rightLeader);
     m_rightLeader.setInverted(InvertType.InvertMotorOutput);
     m_rightFollower.setInverted(InvertType.FollowMaster);
+    m_leftFollower.setInverted(InvertType.FollowMaster);
+
+    m_leftLeader.setSensorPhase(true);
+    m_rightLeader.setSensorPhase(true);
 
     diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
     
@@ -92,8 +96,10 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void setDefaultNeutralMode() {
-    m_leftLeader.setNeutralMode(NeutralMode.Brake);
-    m_rightLeader.setNeutralMode(NeutralMode.Brake);
+    // m_leftLeader.setNeutralMode(NeutralMode.Brake);
+    // m_rightLeader.setNeutralMode(NeutralMode.Brake);
+    m_leftLeader.setNeutralMode(NeutralMode.Coast);
+    m_rightLeader.setNeutralMode(NeutralMode.Coast);
 }
   
   /**

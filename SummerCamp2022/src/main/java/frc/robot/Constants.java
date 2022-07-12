@@ -35,16 +35,16 @@ public final class Constants {
         public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
         public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
 
-        public static int ID_leftLeaderMotor = 3;
-        public static int ID_leftFollowerMotor = 4;
-        public static int ID_rightLeaderMotor = 5;
-        public static int ID_rightFollowerMotor = 6;
+        public static int ID_leftLeaderMotor = 4;
+        public static int ID_leftFollowerMotor = 5;
+        public static int ID_rightLeaderMotor = 6;
+        public static int ID_rightFollowerMotor = 7;
     }
 
     public static final class IndexConstants {
         // All variables are placeholders 
-        public static final int ID_HopperMotor = 0;
-        public static final int ID_ConveyorMotor = 0;
+        public static final int ID_HopperMotor = 15;
+        public static final int ID_ConveyorMotor = 99;
         public static final int PID_id = 0;
 
         public static final double closedVoltageRampingConstant = 0;
@@ -56,9 +56,9 @@ public final class Constants {
 
     public static final class ShooterConstants {
         // All variables are placeholders 
-        public static final int ID_FlyWheelMotor = 1;
-        public static final int ID_HoodMotor = 2;
-        public static final int ID_RotateMotor = 0;
+        public static final int ID_FlyWheelMotor = 99;
+        public static final int ID_HoodMotor = 99;
+        public static final int ID_RotateMotor = 10;
         public static final double shootMotorVelocity = 0.5;
     
         public static final double kF = 0.048;

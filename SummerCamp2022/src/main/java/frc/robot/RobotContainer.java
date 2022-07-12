@@ -98,6 +98,41 @@ public class RobotContainer {
               m_drive.drive(-speed, -turn * 0.4, false);
             },
             m_drive));
+
+
+            // m_shooter.setDefaultCommand(
+            //   // A split-stick arcade command, with forward/backward controlled by the left
+            //   // hand, and turning controlled by the right.
+            //   new RunCommand( // new instance
+            //       () -> {
+            //         double x = -m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Left_Stick_Y);
+            //         double yaw = m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Right_Stick_X);
+            //         // fancy exponential formulas to shape the controller inputs to be flat when
+            //         // only
+            //         // pressed a little, and ramp up as stick pushed more.
+            //         double speed = 0.0;
+            //         if (x != 0) {
+            //           speed = (Math.abs(x) / x) * (Math.exp(-400.0 * Math.pow(x / 3.0, 4.0)))
+            //               + (-Math.abs(x) / x);
+            //         }
+            //         double turn = 0.0;
+            //         if (yaw != 0) {
+            //           turn = (Math.abs(yaw) / yaw) * (Math.exp(-400.0 * Math.pow(yaw / 3.0, 4.0)))
+            //               + (-Math.abs(yaw) / yaw);
+            //         }
+            //         // The turn input results in really quick movement of the bot, so
+            //         // let's reduce the turn input and make it even less if we are going faster
+            //         // This is a simple y = mx + b equation to adjust the turn input based on the
+            //         // speed.
+            //         turn = turn * (-0.4 * Math.abs(speed) + 0.5);
+      
+            //         m_drive.drive(-speed, -turn * 0.4, false);
+            //       },
+            //       m_drive));
+      
+
+
+      
   }
 
   /**
