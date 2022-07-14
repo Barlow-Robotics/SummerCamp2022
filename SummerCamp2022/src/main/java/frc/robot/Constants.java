@@ -56,7 +56,7 @@ public final class Constants {
 
     public static final class ShooterConstants {
         // All variables are placeholders 
-        public static final int ID_FlyWheelMotor = 99;
+        public static final int ID_FlyWheelMotor = 11;
         public static final int ID_HoodMotor = 99;
         public static final int ID_RotateMotor = 10;
         public static final double shootMotorVelocity = 0.5;

@@ -20,6 +20,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Servo servo0 ;
   private Servo servo1 ;
   Joystick joystick; // Joystick 1
 
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    servo0 = new Servo(0) ;
     servo1 = new Servo(1) ;
     joystick = new Joystick(1) ;
     m_robotContainer = new RobotContainer();
@@ -96,22 +98,32 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    servo1.set( servoPos) ;
-    servoPos += servoDelta ;
-    if ( servoPos >= 1.0 ) {
-      servoPos = 1.0 ;
-      servoDelta = -servoDelta ;
+//    servo0.set( 0.0) ;
+//    servo1.set( 0.75) ;
+//    servo1.set( servoPos) ;
+    // servoPos += servoDelta ;
+    // if ( servoPos >= 1.0 ) {
+    //   servoPos = 1.0 ;
+    //   servoDelta = -servoDelta ;
+    // }
+
+    // if ( servoPos <= 0.0 ) {
+    //   servoPos = 0.0 ;
+    //   servoDelta = -servoDelta ;
+    // }
+    if ( joystick.getRawButton(1)) {
+      servo0.set(0.2) ;
+      System.out.println("servo0 to " + 0.1 );
+    } else if (joystick.getRawButton(3)) {
+      servo0.set(0.95) ;
+      System.out.println("servo0 to " + 1.0 );
+    } else {
+      servo0.set(0.5) ;
     }
 
-    if ( servoPos <= 0.0 ) {
-      servoPos = 0.0 ;
-      servoDelta = -servoDelta ;
-    }
-
-
-    // double v = (joystick.getRawAxis(1) + 1.0) / 2.0 ;
-    // servo1.set( v );
-//    System.out.println("Setting servo to " + v );
+    double v = (joystick.getRawAxis(1) + 1.0) / 2.0 ;
+    servo1.set( v );
+   System.out.println("Setting servo to " + v );
 
   }
 
