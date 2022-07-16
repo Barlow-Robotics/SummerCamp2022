@@ -24,8 +24,8 @@ public class Shooter extends SubsystemBase {
   boolean simulationInitialized = false;
 
   public Shooter() {
-    m_flywheelMotor = new WPI_TalonFX(Constants.ShooterConstants.ID_FlyWheelMotor);
-    m_turretMotor = new WPI_TalonSRX(Constants.ShooterConstants.ID_TurretMotor);
+    m_flywheelMotor = new WPI_TalonFX(Constants.ShooterConstants.Flywheel.ID_Motor);
+    m_turretMotor = new WPI_TalonSRX(Constants.ShooterConstants.Turret.ID_Motor);
 
     setMotorConfig(m_flywheelMotor);
     m_flywheelMotor.setInverted(TalonFXInvertType.Clockwise);
@@ -34,7 +34,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void startShooting() {
-    m_flywheelMotor.set(TalonFXControlMode.PercentOutput, Constants.ShooterConstants.shootMotorVelocity);
+    m_flywheelMotor.set(TalonFXControlMode.PercentOutput, Constants.ShooterConstants.Flywheel.shootMotorVelocity);
     isShooting = true;
   }
 
@@ -51,10 +51,10 @@ public class Shooter extends SubsystemBase {
     m_turretMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity /* * Constants.DriveConstants.MotorVelocityOneMeterPerSecond*/ );
   }
 
-  public double getFlywheelSpeed() {
-    double s = m_flywheelMotor.getSelectedSensorVelocity() * 10.0 * Constants.ShooterConstants.Meters_Per_Count;
-    return (s); 
-  }
+  // public double getFlywheelSpeed() {
+  //   double s = m_flywheelMotor.getSelectedSensorVelocity() * 10.0 * Constants.ShooterConstants.Meters_Per_Count;
+  //   return (s); 
+  // }
 
   @Override
   public void periodic() {
@@ -65,10 +65,10 @@ public class Shooter extends SubsystemBase {
     motor.configFactoryDefault();
     motor.configClosedloopRamp(Constants.ShooterConstants.closedVoltageRampingConstant);
     motor.configOpenloopRamp(Constants.ShooterConstants.manualVoltageRampingConstant);
-    motor.config_kF(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kF);
-    motor.config_kP(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kP);
-    motor.config_kI(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kI);
-    motor.config_kD(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kD);
+    // motor.config_kF(Constants.ShooterConstants.Turret.PID_id, Constants.ShooterConstants.Turret.kf);
+    // motor.config_kP(Constants.ShooterConstants.Turret.PID_id, Constants.ShooterConstants.Turret.kP);
+    // motor.config_kI(Constants.ShooterConstants.Turret.PID_id, Constants.ShooterConstants.Turret.kI);
+    // motor.config_kD(Constants.ShooterConstants.Turret.PID_id, Constants.ShooterConstants.Turret.kD);
     motor.setNeutralMode(NeutralMode.Brake);
   }
 
@@ -77,11 +77,11 @@ public class Shooter extends SubsystemBase {
     motor.configOpenloopRamp(0.1) ;
     motor.configClosedloopRamp(Constants.ShooterConstants.closedVoltageRampingConstant);
     motor.configOpenloopRamp(Constants.ShooterConstants.manualVoltageRampingConstant);
-    motor.config_kF(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kF);
-    motor.config_kP(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kP);
-    motor.config_kI(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kI);
-    motor.config_kD(Constants.ShooterConstants.PID_id, Constants.ShooterConstants.Flywheel_kD);
-    motor.setNeutralMode(NeutralMode.Brake);
+    motor.config_kF(Constants.ShooterConstants.Flywheel.PID_id, Constants.ShooterConstants.Flywheel.kF);
+    motor.config_kP(Constants.ShooterConstants.Flywheel.PID_id, Constants.ShooterConstants.Flywheel.kP);
+    motor.config_kI(Constants.ShooterConstants.Flywheel.PID_id, Constants.ShooterConstants.Flywheel.kI);
+    motor.config_kD(Constants.ShooterConstants.Flywheel.PID_id, Constants.ShooterConstants.Flywheel.kD);
+    motor.setNeutralMode(NeutralMode.Coast);
   }
 
   public void simulationInit() {

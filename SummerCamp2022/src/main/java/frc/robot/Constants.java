@@ -63,44 +63,56 @@ public final class Constants {
 
         public static final double feederMotorSpeed = 0.8;
 
-
-
     }
 
     public static final class ShooterConstants {
         // All variables are placeholders 
-        public static final int ID_FlyWheelMotor = 11;
-        public static final int ID_TurretMotor = 10;
-        public static final double shootMotorVelocity = 1.0;
-    
-        public static final double Flywheel_kF = 0.048;
-        public static final double Flywheel_kP = 0.001;
-        public static final double Flywheel_kI = 0.0;
-        public static final double Flywheel_kD = 0.0;
-        public static final int PID_id = 0;
+
+        public static final class Flywheel {
+            public static final int ID_Motor = 11;
+            public static final double shootMotorVelocity = 1.0;
+        
+            public static final double kF = 0.048;
+            public static final double kP = 0.001;
+            public static final double kI = 0.0;
+            public static final double kD = 0.0;
+            public static final int PID_id = 0;
+
+            // update these for the flywheel. These come from the arm bar, but the same concepts apply
+            public static final int UnitsPerMotorRotation = 2048;
+            public static final double GearboxGearRatio = 100.0 / 1.0; // farther gear to axel gear
+            public static final double ChainGearRatio = 42.0 / 12.0; // (or 15/12) upper gear to lower gear
+            public static final double UnitsPerArmRotation = UnitsPerMotorRotation * GearboxGearRatio * ChainGearRatio ;
+            public static final double UnitsPerArmDegree = UnitsPerArmRotation / 360.0 ;
+            public static final double DegreePerSecond = UnitsPerArmDegree / 10.0 ;
+                
+        }
 
         public static final double closedVoltageRampingConstant = 0.0;
         public static final double manualVoltageRampingConstant = 0.0;
         public static final double ManualHoodAdjustmentSpeed = 0;
         public static final double ManualRotateTurretSpeed = 0;
         
-        public static final int Counts_Per_Rotation_Revolution = 4096;
-        
-        public static final double Gear_Ratio = 10.71;
-        public static final double Counts_Per_Revolution = 8192.0 * Gear_Ratio;
-        public static final double InchesToMeters = 0.0254;
-        public static final double Wheel_Diameter = 6.0 * InchesToMeters;
-        public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
-        public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
+        // public static final int Counts_Per_Rotation_Revolution = 4096;
+
+        // public static final double Gear_Ratio = 10.71;
+        // public static final double Counts_Per_Revolution = 8192.0 * Gear_Ratio;
+        // public static final double InchesToMeters = 0.0254;
+        // public static final double Wheel_Diameter = 6.0 * InchesToMeters;
+        // public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
+        // public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
     
-        public static final double CorrectionRotationSpeed = 2.0 ;  // meters/sec
         
-        public static final int UnitsPerMotorRotation = 2048;
-        public static final double GearboxGearRatio = 100.0 / 1.0; // farther gear to axel gear
-        public static final double ChainGearRatio = 42.0 / 12.0; // (or 15/12) upper gear to lower gear
-        public static final double UnitsPerArmRotation = UnitsPerMotorRotation * GearboxGearRatio * ChainGearRatio ;
-        public static final double UnitsPerArmDegree = UnitsPerArmRotation / 360.0 ;
-        public static final double DegreePerSecond = UnitsPerArmDegree / 10.0 ;
+
+        public static class Turret {
+            public static final int ID_Motor = 10;
+
+            public static final double maxTurretOutput = 0.3 ; 
+            public static final double kp = maxTurretOutput / 160.0 ;  // maximum error. 
+            public static final double ki = 0.0 ; 
+            public static final double kd = 0.0 ; 
+        }
+
     }
 
     public static final class UnderGlowConstants {

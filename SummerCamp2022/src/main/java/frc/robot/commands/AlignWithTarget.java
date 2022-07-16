@@ -54,7 +54,7 @@ public class AlignWithTarget extends CommandBase {
       } else {
         double adjustment = pid.calculate(error);
         adjustment = Math.signum(adjustment)
-            * Math.min(Math.abs(adjustment), Constants.ShooterConstants.CorrectionRotationSpeed / 4.0);
+            * Math.min(Math.abs(adjustment), Constants.ShooterConstants.Turret.maxTurretOutput );
         rotateVelocity = adjustment;
       }
       m_shooter.rotateTurret(rotateVelocity);
