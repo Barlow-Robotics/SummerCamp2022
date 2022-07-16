@@ -70,7 +70,7 @@ public final class Constants {
 
         public static final class Flywheel {
             public static final int ID_Motor = 11;
-            public static final double flywheelMotorVelocity = 1.0;
+            public static final double flywheelMotorVelocity = 5800;
         
             public static final double kF = 0.048;
             public static final double kP = 0.001;

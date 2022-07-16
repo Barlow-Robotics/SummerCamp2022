@@ -29,7 +29,7 @@ public class StopIndexAndShooter extends CommandBase {
   @Override
   public void execute() {
     m_shooter.stopShooting();
-    m_index.stopIndex();
+    m_index.stopFeeder();
     m_index.stopHopper();
   }
 
