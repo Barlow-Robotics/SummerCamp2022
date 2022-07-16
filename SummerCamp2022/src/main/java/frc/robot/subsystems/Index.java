@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.sim.PhysicsSim;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Index extends SubsystemBase {
 
   WPI_TalonSRX m_hopperMotor;
-  WPI_TalonSRX m_conveyorMotor;
+  WPI_TalonSRX m_feederMotor;
 
   boolean conveyorIsRunning = false;  
   boolean simulationInitialized = false;
@@ -24,10 +25,10 @@ public class Index extends SubsystemBase {
   /** Creates a new Index. */
   public Index() {
     m_hopperMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_HopperMotor);
-    m_conveyorMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_ConveyorMotor);
+    m_feederMotor = new WPI_TalonSRX(Constants.IndexConstants.ID_FeederMotor);
   
-    setMotorConfig(m_hopperMotor);
-    setMotorConfig(m_conveyorMotor);
+    setHopperMotorConfig(m_hopperMotor);
+    setFeederMotorConfig(m_feederMotor);
   }
 
   @Override
@@ -36,12 +37,12 @@ public class Index extends SubsystemBase {
   }
 
   public void startIndex() {
-    m_conveyorMotor.set(TalonSRXControlMode.PercentOutput, Constants.IndexConstants.conveyorMotorSpeed);
+    m_feederMotor.set(TalonSRXControlMode.PercentOutput, Constants.IndexConstants.feederMotorSpeed);
     conveyorIsRunning = true;
   }
 
   public void stopIndex() {
-    m_conveyorMotor.set(TalonSRXControlMode.PercentOutput, 0);
+    m_feederMotor.set(TalonSRXControlMode.PercentOutput, 0);
     conveyorIsRunning = false;
   }
   
@@ -53,19 +54,30 @@ public class Index extends SubsystemBase {
       m_hopperMotor.set(TalonSRXControlMode.PercentOutput, 0);
   }
 
-  private void setMotorConfig(WPI_TalonSRX motor) {
+  private void setHopperMotorConfig(WPI_TalonSRX motor) {
     motor.configFactoryDefault();
     motor.configClosedloopRamp(Constants.IndexConstants.closedVoltageRampingConstant);
     motor.configOpenloopRamp(Constants.IndexConstants.manualVoltageRampingConstant);
-    motor.config_kF(Constants.IndexConstants.PID_id, Constants.ShooterConstants.kF);
-    motor.config_kP(Constants.IndexConstants.PID_id, Constants.ShooterConstants.kP);
-    motor.config_kI(Constants.IndexConstants.PID_id, Constants.ShooterConstants.kI);
-    motor.config_kD(Constants.IndexConstants.PID_id, Constants.ShooterConstants.kD);
+    motor.config_kF(Constants.IndexConstants.PID_id, Constants.IndexConstants.Hopper_kF);
+    motor.config_kP(Constants.IndexConstants.PID_id, Constants.IndexConstants.Hopper_kP);
+    motor.config_kI(Constants.IndexConstants.PID_id, Constants.IndexConstants.Hopper_kI);
+    motor.config_kD(Constants.IndexConstants.PID_id, Constants.IndexConstants.Hopper_kD);
+    motor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  private void setFeederMotorConfig(WPI_TalonSRX motor) {
+    motor.configFactoryDefault();
+    motor.configClosedloopRamp(Constants.IndexConstants.closedVoltageRampingConstant);
+    motor.configOpenloopRamp(Constants.IndexConstants.manualVoltageRampingConstant);
+    motor.config_kF(Constants.IndexConstants.PID_id, Constants.IndexConstants.Feeder_kF);
+    motor.config_kP(Constants.IndexConstants.PID_id, Constants.IndexConstants.Feeder_kP);
+    motor.config_kI(Constants.IndexConstants.PID_id, Constants.IndexConstants.Feeder_kI);
+    motor.config_kD(Constants.IndexConstants.PID_id, Constants.IndexConstants.Feeder_kD);
     motor.setNeutralMode(NeutralMode.Brake);
   }
 
   public void simulationInit() {
-      PhysicsSim.getInstance().addTalonSRX(m_conveyorMotor, 0.5, 6800);
+      PhysicsSim.getInstance().addTalonSRX(m_feederMotor, 0.5, 6800);
       PhysicsSim.getInstance().addTalonSRX(m_hopperMotor, 0.5, 6800);
     }
 

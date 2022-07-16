@@ -39,11 +39,11 @@ public class AlignWithTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_vision.visionTargetIsVisible()) {
-      System.out.println("Target is visible");
-    } else {
-      System.out.println("Target is not visible");
-    }
+    // if (m_vision.visionTargetIsVisible()) {
+    //   System.out.println("Target is visible");
+    // } else {
+    //   System.out.println("Target is not visible");
+    // }
 
     double rotateVelocity = 0.0;
 

@@ -34,7 +34,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     servo0 = new Servo(0) ;
+    servo0.setBounds(2.0, 1.8 , 1.5, 1.2, 1.0);
+    servo0.enableDeadbandElimination(true);
     servo1 = new Servo(1) ;
+    servo1.setBounds(2.0, 1.8 , 1.5, 1.2, 1.0);
+    servo1.enableDeadbandElimination(true);
     joystick = new Joystick(1) ;
     m_robotContainer = new RobotContainer();
   }
@@ -107,21 +111,19 @@ public class Robot extends TimedRobot {
     //   servoDelta = -servoDelta ;
     // }
 
-    // if ( servoPos <= 0.0 ) {
-    //   servoPos = 0.0 ;
-    //   servoDelta = -servoDelta ;
+
+    // if ( joystick.getRawButton(1)) {
+    //   servo0.setPosition(0.2);
+    //   System.out.println("servo0 to " + 0.1 );
+    // } else if (joystick.getRawButton(3)) {
+    //   servo0.setPosition(0.95) ;
+    //   System.out.println("servo0 to " + 1.0 );
+    // } else {
+    //   servo0.setPosition(0.5) ;
     // }
-    if ( joystick.getRawButton(1)) {
-      servo0.set(0.2) ;
-      System.out.println("servo0 to " + 0.1 );
-    } else if (joystick.getRawButton(3)) {
-      servo0.set(0.95) ;
-      System.out.println("servo0 to " + 1.0 );
-    } else {
-      servo0.set(0.5) ;
-    }
 
     double v = (joystick.getRawAxis(1) + 1.0) / 2.0 ;
+    servo0.set( v );
     servo1.set( v );
    System.out.println("Setting servo to " + v );
 

@@ -44,33 +44,47 @@ public final class Constants {
     public static final class IndexConstants {
         // All variables are placeholders 
         public static final int ID_HopperMotor = 15;
-        public static final int ID_ConveyorMotor = 99;
+        public static final int ID_FeederMotor = 16;
         public static final int PID_id = 0;
 
         public static final double closedVoltageRampingConstant = 0;
         public static final double manualVoltageRampingConstant = 0;
         
         public static final double hopperMotorSpeed = 0.5;
-        public static final double conveyorMotorSpeed = 0.5;
+        public static final double Hopper_kF = 0.048;
+        public static final double Hopper_kP = 0.001;
+        public static final double Hopper_kI = 0.0;
+        public static final double Hopper_kD = 0.0;
+
+        public static final double Feeder_kF = 0.048;
+        public static final double Feeder_kP = 0.001;
+        public static final double Feeder_kI = 0.0;
+        public static final double Feeder_kD = 0.0;
+
+        public static final double feederMotorSpeed = 0.8;
+
+
+
     }
 
     public static final class ShooterConstants {
         // All variables are placeholders 
         public static final int ID_FlyWheelMotor = 11;
-        public static final int ID_HoodMotor = 99;
-        public static final int ID_RotateMotor = 10;
-        public static final double shootMotorVelocity = 0.5;
+        public static final int ID_TurretMotor = 10;
+        public static final double shootMotorVelocity = 1.0;
     
-        public static final double kF = 0.048;
-        public static final double kP = 0.001;
-        public static final double kI = 0.0;
-        public static final double kD = 0.0;
+        public static final double Flywheel_kF = 0.048;
+        public static final double Flywheel_kP = 0.001;
+        public static final double Flywheel_kI = 0.0;
+        public static final double Flywheel_kD = 0.0;
         public static final int PID_id = 0;
 
         public static final double closedVoltageRampingConstant = 0.0;
         public static final double manualVoltageRampingConstant = 0.0;
         public static final double ManualHoodAdjustmentSpeed = 0;
         public static final double ManualRotateTurretSpeed = 0;
+        
+        public static final int Counts_Per_Rotation_Revolution = 4096;
         
         public static final double Gear_Ratio = 10.71;
         public static final double Counts_Per_Revolution = 8192.0 * Gear_Ratio;
