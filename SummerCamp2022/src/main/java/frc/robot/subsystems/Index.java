@@ -19,7 +19,7 @@ public class Index extends SubsystemBase {
   WPI_TalonSRX m_hopperMotor;
   WPI_TalonSRX m_feederMotor;
 
-  boolean conveyorIsRunning = false;  
+  boolean feederIsRunning = false;  
   boolean simulationInitialized = false;
 
   /** Creates a new Index. */
@@ -36,14 +36,14 @@ public class Index extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void startIndex() {
+  public void startFeeder() {
     m_feederMotor.set(TalonSRXControlMode.PercentOutput, Constants.IndexConstants.feederMotorSpeed);
-    conveyorIsRunning = true;
+    feederIsRunning = true;
   }
 
-  public void stopIndex() {
+  public void stopFeeder() {
     m_feederMotor.set(TalonSRXControlMode.PercentOutput, 0);
-    conveyorIsRunning = false;
+    feederIsRunning = false;
   }
   
   public void startHopper() {
