@@ -70,7 +70,6 @@ public final class Constants {
 
         public static final class Flywheel {
             public static final int ID_Motor = 11;
-            public static final double flywheelMotorVelocity = 5800;
         
             public static final double kF = 0.048;
             public static final double kP = 0.001;
@@ -78,9 +77,16 @@ public final class Constants {
             public static final double kD = 0.0;
             public static final int PID_id = 0;
 
-            // update these for the flywheel. These come from the arm bar, but the same concepts apply
             public static final int UnitsPerMotorRotation = 2048;
-            public static final double GearboxGearRatio = 100.0 / 1.0; // farther gear to axel gear
+            public static final double GearboxGearRatio = 1.0 / 1.0; // farther gear to axel gear
+            public static final double TotalUnitsPerRotation = (double) UnitsPerMotorRotation * GearboxGearRatio ;
+
+            public static final double RevPerSecondVelocity = TotalUnitsPerRotation / 10.0 ; 
+            public static final double RPM = RevPerSecondVelocity / 60.0 ;
+
+            public static final double flywheelMotorVelocity = 1700 * RPM;
+
+            // update these for the flywheel. These come from the arm bar, but the same concepts apply
             public static final double ChainGearRatio = 42.0 / 12.0; // (or 15/12) upper gear to lower gear
             public static final double UnitsPerArmRotation = UnitsPerMotorRotation * GearboxGearRatio * ChainGearRatio ;
             public static final double UnitsPerArmDegree = UnitsPerArmRotation / 360.0 ;
