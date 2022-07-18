@@ -78,20 +78,13 @@ public final class Constants {
             public static final int PID_id = 0;
 
             public static final int UnitsPerMotorRotation = 2048;
-            public static final double GearboxGearRatio = 1.0 / 1.0; // farther gear to axel gear
-            public static final double TotalUnitsPerRotation = (double) UnitsPerMotorRotation * GearboxGearRatio ;
 
-            public static final double RevPerSecondVelocity = TotalUnitsPerRotation / 10.0 ; 
-            public static final double RPM = RevPerSecondVelocity / 60.0 ;
+            public static final double ChainGearRatio = 24.0 / 42.0; 
+            public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
-            public static final double flywheelMotorVelocity = 1700 * RPM;
+            public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
+            public static final double FlywheelVelocity = 9000 * RPM ;
 
-            // update these for the flywheel. These come from the arm bar, but the same concepts apply
-            public static final double ChainGearRatio = 42.0 / 12.0; // (or 15/12) upper gear to lower gear
-            public static final double UnitsPerArmRotation = UnitsPerMotorRotation * GearboxGearRatio * ChainGearRatio ;
-            public static final double UnitsPerArmDegree = UnitsPerArmRotation / 360.0 ;
-            public static final double DegreePerSecond = UnitsPerArmDegree / 10.0 ;
-                
         }
 
         public static final double closedVoltageRampingConstant = 0.0;
@@ -108,27 +101,31 @@ public final class Constants {
         // public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
         // public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
     
-        
-
         public static class Turret {
             public static final int ID_Motor = 10;
 
-            public static final double maxTurretOutput = 0.3 ; 
-            public static final double kp = maxTurretOutput / 160.0 ;  // maximum error. 
+            public static final double maxTurretOutput = 0.2 ; 
+            public static final double kp = 0.1 / 160.0 ;  // maximum error. 
             public static final double ki = 0.0 ; 
-            public static final double kd = 0.0 ; 
+            public static final double kd = kp * 0.125 ; 
+            public static final double AlignmentTolerence = 10.0;
         }
 
+        public static class Hood {
+            public static final int ID_leftServo = 0;
+            public static final int ID_rightServo = 1;
+            public static final double maxHoodOutput = 0;
+            public static final double servoPos = 0;
+        }
     }
 
     public static final class UnderGlowConstants {
     }
 
     public static final class VisionConstants {
-        public static final double vision_kp = 0.005;
-        public static final double vision_ki = 0;
-        public static final double vision_kd = 0;
-        public static final double AlignmentTolerence = 5.0;
+        // public static final double vision_kp = 0.005;
+        // public static final double vision_ki = 0;
+        // public static final double vision_kd = 0;
     }
 
     public static final class AutoConstants {

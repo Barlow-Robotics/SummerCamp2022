@@ -12,8 +12,10 @@ import frc.robot.commands.StopIndexAndShooter;
 import frc.robot.commands.TurnOffUnderGlow;
 import frc.robot.commands.TurnOnUnderGlow;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.UnderGlow;
 import frc.robot.subsystems.Vision;
 
@@ -43,14 +45,16 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final UnderGlow m_underGlow = new UnderGlow();
   private final Vision m_vision = new Vision();
+  private final Turret m_turret = new Turret();
+  private final Hood m_hood = new Hood();
 
-  private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_shooter, m_vision);
-  private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_shooter);
-  private final RotateTurret rotateTurretCommand = new RotateTurret(m_shooter);
+  private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_turret, m_vision);
+  private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_hood);
+  //private final RotateTurret rotateTurretCommand = new RotateTurret(m_turret);
   private final StartIndexAndShooter startIndexAndShooterCommand = new StartIndexAndShooter(m_shooter, m_index);
   private final StopIndexAndShooter stopIndexAndShooterCommand = new StopIndexAndShooter(m_index, m_shooter);
-  private final TurnOffUnderGlow turnOffUnderGlowCommand = new TurnOffUnderGlow(m_underGlow);
-  private final TurnOnUnderGlow turnOnUnderGlowCommand = new TurnOnUnderGlow(m_underGlow);
+  // private final TurnOffUnderGlow turnOffUnderGlowCommand = new TurnOffUnderGlow(m_underGlow);
+  // private final TurnOnUnderGlow turnOnUnderGlowCommand = new TurnOnUnderGlow(m_underGlow);
 
   Joystick m_driverController; // Joystick 1
   Joystick m_operatorController; // Joystick 2
@@ -99,40 +103,23 @@ public class RobotContainer {
             },
             m_drive));
 
-
-            // m_shooter.setDefaultCommand(
-            //   // A split-stick arcade command, with forward/backward controlled by the left
-            //   // hand, and turning controlled by the right.
-            //   new RunCommand( // new instance
-            //       () -> {
-            //         double x = -m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Left_Stick_Y);
-            //         double yaw = m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Right_Stick_X);
-            //         // fancy exponential formulas to shape the controller inputs to be flat when
-            //         // only
-            //         // pressed a little, and ramp up as stick pushed more.
-            //         double speed = 0.0;
-            //         if (x != 0) {
-            //           speed = (Math.abs(x) / x) * (Math.exp(-400.0 * Math.pow(x / 3.0, 4.0)))
-            //               + (-Math.abs(x) / x);
-            //         }
-            //         double turn = 0.0;
-            //         if (yaw != 0) {
-            //           turn = (Math.abs(yaw) / yaw) * (Math.exp(-400.0 * Math.pow(yaw / 3.0, 4.0)))
-            //               + (-Math.abs(yaw) / yaw);
-            //         }
-            //         // The turn input results in really quick movement of the bot, so
-            //         // let's reduce the turn input and make it even less if we are going faster
-            //         // This is a simple y = mx + b equation to adjust the turn input based on the
-            //         // speed.
-            //         turn = turn * (-0.4 * Math.abs(speed) + 0.5);
+            m_turret.setDefaultCommand(
+              // A split-stick arcade command, with forward/backward controlled by the left
+              // hand, and turning controlled by the right.
+              new RunCommand( // new instance
+                  () -> {
+                    double yaw = m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Right_Stick_X) * Constants.ShooterConstants.Turret.maxTurretOutput ;
+                    m_turret.rotate(yaw);
+                  },
+                  m_turret));
       
-            //         m_drive.drive(-speed, -turn * 0.4, false);
-            //       },
-            //       m_drive));
-      
-
-
-      
+            m_hood.setDefaultCommand(
+              new RunCommand(
+                   () -> {
+                    double lateral = (m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Left_Stick_Y) + 1.0) / 2.0;
+                    m_hood.setServoPosition(lateral);
+                   },
+                   m_hood));
   }
 
   /**
@@ -158,10 +145,11 @@ public class RobotContainer {
     System.out.println("The controller name is " + controllerType);
     //boolean controllerFound = false;
 
-    alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Button_B);
+    alignWithTargetButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Left_Bumper);
     indexAndShooterButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Right_Bumper);
 
-    alignWithTargetButton.whenPressed(alignWithTargetCommand);
+    alignWithTargetButton.whileHeld(alignWithTargetCommand);
+//    alignWithTargetButton.whenPressed(alignWithTargetCommand).whenReleased(alignWithTargetCommand.cancel());
     indexAndShooterButton.whenPressed(startIndexAndShooterCommand).whenReleased(stopIndexAndShooterCommand);
 
     // if (m_operatorController.getPOV(0) == 0.0) {
