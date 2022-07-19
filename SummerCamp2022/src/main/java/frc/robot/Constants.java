@@ -61,7 +61,7 @@ public final class Constants {
         public static final double Feeder_kI = 0.0;
         public static final double Feeder_kD = 0.0;
 
-        public static final double feederMotorSpeed = 0.8;
+        public static final double feederMotorSpeed = 0.9;
 
     }
 
@@ -83,7 +83,7 @@ public final class Constants {
             public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
-            public static final double FlywheelVelocity = 9000 * RPM ;
+            public static final double FlywheelVelocity = 3000 * RPM ;
 
         }
 
@@ -104,7 +104,7 @@ public final class Constants {
         public static class Turret {
             public static final int ID_Motor = 10;
 
-            public static final double maxTurretOutput = 0.2 ; 
+            public static final double maxTurretOutput = 0.15 ; 
             public static final double kp = 0.1 / 160.0 ;  // maximum error. 
             public static final double ki = 0.0 ; 
             public static final double kd = kp * 0.125 ; 
@@ -123,9 +123,6 @@ public final class Constants {
     }
 
     public static final class VisionConstants {
-        // public static final double vision_kp = 0.005;
-        // public static final double vision_ki = 0;
-        // public static final double vision_kd = 0;
     }
 
     public static final class AutoConstants {
