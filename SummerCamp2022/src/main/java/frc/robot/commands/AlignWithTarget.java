@@ -59,7 +59,7 @@ public class AlignWithTarget extends CommandBase {
             }
             //m_turret.rotate(0.0);
             //System.out.println("Alignment adjustment is " + rotateVelocity);
-            m_turret.rotate(rotateVelocity);
+            m_turret.rotateTurret(rotateVelocity);
         } else {
             //System.out.println("Target not visible");
             missedFrames++;
@@ -69,7 +69,7 @@ public class AlignWithTarget extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_turret.rotate(0.0);
+        m_turret.rotateTurret(0.0);
     }
 
     // Returns true when the command should end.

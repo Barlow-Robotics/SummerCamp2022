@@ -26,7 +26,6 @@ public class Shooter extends SubsystemBase {
 
         setMotorConfig(m_flywheelMotor);
         m_flywheelMotor.setInverted(TalonFXInvertType.Clockwise);
-        // setMotorConfig(m_hoodMotor);
     }
 
     public void startShooting() {
@@ -39,11 +38,10 @@ public class Shooter extends SubsystemBase {
         isShooting = false;
     }
 
-    // public double getFlywheelSpeed() {
-    // double s = m_flywheelMotor.getSelectedSensorVelocity() * 10.0 *
-    // Constants.ShooterConstants.Meters_Per_Count;
-    // return (s);
-    // }
+    public double getFlywheelSpeed() {
+        double s = m_flywheelMotor.getSelectedSensorVelocity() ;
+        return (s);
+    }
 
     @Override
     public void periodic() {

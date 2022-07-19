@@ -109,7 +109,7 @@ public class RobotContainer {
               new RunCommand( // new instance
                   () -> {
                     double yaw = m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Right_Stick_X) * Constants.ShooterConstants.Turret.maxTurretOutput ;
-                    m_turret.rotate(yaw);
+                    m_turret.rotateTurret(yaw);
                   },
                   m_turret));
       

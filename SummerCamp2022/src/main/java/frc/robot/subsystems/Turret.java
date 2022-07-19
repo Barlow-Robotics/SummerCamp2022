@@ -13,30 +13,48 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.robot.Constants;
 import frc.robot.sim.PhysicsSim;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Turret extends SubsystemBase {
 
     WPI_TalonSRX m_turretMotor;
+
+    DigitalInput leftLimitSwitch;
+    DigitalInput rightLimitSwitch;
 
     /** Creates a new Turret. */
     public Turret() {
         m_turretMotor = new WPI_TalonSRX(Constants.ShooterConstants.Turret.ID_Motor);
         setMotorConfig(m_turretMotor);
         m_turretMotor.setInverted(InvertType.InvertMotorOutput);
+
+        leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
+        rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
     }
 
-    public void rotate(double rotateVelocity) {
-        m_turretMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity /*
-                                                                             * * Constants.DriveConstants.
-                                                                             * MotorVelocityOneMeterPerSecond
-                                                                             */ );
-    }
+    public void rotateTurret(double rotateVelocity) {
+        // if (rotateVelocity > 0) {
+        //     if (leftLimitSwitch.get()) {
+        //         // System.out.println("left is pressed");
+        //         m_turretMotor.set(TalonSRXControlMode.PercentOutput, 0);
+        //     } else {
+                m_turretMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity);
+    //         }
+    //     } else {
+    //         if (rightLimitSwitch.get()) {
+    //             // System.out.println("right is pressed");
+    //             m_turretMotor.set(TalonSRXControlMode.PercentOutput, 0);
+    //         } else {
+    //             m_turretMotor.set(TalonSRXControlMode.PercentOutput, rotateVelocity);
+    //         }
+    //     }
+     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        NetworkTableInstance.getDefault().getEntry("turret/encoder_position").setDouble(m_turretMotor.getSelectedSensorPosition());
+        NetworkTableInstance.getDefault().getEntry("turret/encoder_position")
+                .setDouble(m_turretMotor.getSelectedSensorPosition());
     }
 
     private void setMotorConfig(WPI_TalonSRX motor) {

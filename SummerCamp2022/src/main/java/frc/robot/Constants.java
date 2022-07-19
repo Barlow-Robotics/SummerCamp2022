@@ -50,7 +50,7 @@ public final class Constants {
         public static final double closedVoltageRampingConstant = 0;
         public static final double manualVoltageRampingConstant = 0;
         
-        public static final double hopperMotorSpeed = 0.5;
+        public static final double hopperMotorSpeed = 0.15;
         public static final double Hopper_kF = 0.048;
         public static final double Hopper_kP = 0.001;
         public static final double Hopper_kI = 0.0;
@@ -83,23 +83,11 @@ public final class Constants {
             public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
-            public static final double FlywheelVelocity = 3000 * RPM ;
-
+            public static final double FlywheelVelocity = 5000 * RPM ;
         }
 
-        public static final double closedVoltageRampingConstant = 0.0;
-        public static final double manualVoltageRampingConstant = 0.0;
-        public static final double ManualHoodAdjustmentSpeed = 0;
-        public static final double ManualRotateTurretSpeed = 0;
-        
-        // public static final int Counts_Per_Rotation_Revolution = 4096;
-
-        // public static final double Gear_Ratio = 10.71;
-        // public static final double Counts_Per_Revolution = 8192.0 * Gear_Ratio;
-        // public static final double InchesToMeters = 0.0254;
-        // public static final double Wheel_Diameter = 6.0 * InchesToMeters;
-        // public static final double Meters_Per_Revolution = Wheel_Diameter * Math.PI ;
-        // public static final double Meters_Per_Count = Meters_Per_Revolution / Counts_Per_Revolution;
+        public static final double closedVoltageRampingConstant = 0.1;
+        public static final double manualVoltageRampingConstant = 0.2;
     
         public static class Turret {
             public static final int ID_Motor = 10;
@@ -109,6 +97,9 @@ public final class Constants {
             public static final double ki = 0.0 ; 
             public static final double kd = kp * 0.125 ; 
             public static final double AlignmentTolerence = 10.0;
+
+            public static final int ID_LeftLimitSwitch = 9;
+            public static final int ID_RightLimitSwitch = 8;
         }
 
         public static class Hood {
