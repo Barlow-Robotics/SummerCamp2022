@@ -50,7 +50,7 @@ public final class Constants {
         public static final double closedVoltageRampingConstant = 0;
         public static final double manualVoltageRampingConstant = 0;
         
-        public static final double hopperMotorSpeed = 0.15;
+        public static final double hopperMotorSpeed = 0.25;
         public static final double Hopper_kF = 0.048;
         public static final double Hopper_kP = 0.001;
         public static final double Hopper_kI = 0.0;
@@ -83,7 +83,7 @@ public final class Constants {
             public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
-            public static final double FlywheelVelocity = 5000 * RPM ;
+            public static final double FlywheelVelocity = 8000 * RPM ;
         }
 
         public static final double closedVoltageRampingConstant = 0.1;
@@ -93,8 +93,8 @@ public final class Constants {
             public static final int ID_Motor = 10;
 
             public static final double maxTurretOutput = 0.15 ; 
-            public static final double kp = 0.1 / 160.0 ;  // maximum error. 
-            public static final double ki = 0.0 ; 
+            public static final double kp = 0.4 / 160.0 ;  // maximum error. 
+            public static final double ki = 0.005 ; 
             public static final double kd = kp * 0.125 ; 
             public static final double AlignmentTolerence = 10.0;
 

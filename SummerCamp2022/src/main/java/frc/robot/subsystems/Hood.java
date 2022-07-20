@@ -17,6 +17,10 @@ public class Hood extends SubsystemBase {
     public Hood() {
         leftServo = new Servo(Constants.ShooterConstants.Hood.ID_leftServo);
         rightServo = new Servo(Constants.ShooterConstants.Hood.ID_rightServo);
+        leftServo.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+        leftServo.enableDeadbandElimination(true);
+        rightServo.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+        rightServo.enableDeadbandElimination(true);
     }
 
     @Override

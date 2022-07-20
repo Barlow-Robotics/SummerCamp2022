@@ -30,7 +30,7 @@ public class Index extends SubsystemBase {
     setHopperMotorConfig(m_hopperMotor);
     setFeederMotorConfig(m_feederMotor);
 
-    m_hopperMotor.setInverted(InvertType.InvertMotorOutput);
+    //m_hopperMotor.setInverted(InvertType.InvertMotorOutput);
   }
 
   @Override

@@ -116,8 +116,8 @@ public class RobotContainer {
             m_hood.setDefaultCommand(
               new RunCommand(
                    () -> {
-                    double lateral = (m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Left_Stick_Y) + 1.0) / 2.0;
-                    m_hood.setServoPosition(lateral);
+                    double pitch = (m_operatorController.getRawAxis(Constants.Logitech_Dual_Action.Left_Stick_Y) + 1.0) / 2.0;
+                    m_hood.setServoPosition(pitch);
                    },
                    m_hood));
   }
