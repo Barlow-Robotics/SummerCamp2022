@@ -8,6 +8,9 @@ import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Turret;
+
+import java.util.ArrayList;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -16,50 +19,72 @@ public class AlignWithTarget extends CommandBase {
     private PIDController pid = new PIDController(Constants.ShooterConstants.Turret.kp, 0, 0);
     private Vision m_vision;
     private Turret m_turret;
-    private Hood m_hood ;
-
-    private double hoodPositionLUT[] = new double[50] ;
-
+    private Hood m_hood;
 
     int missedFrames = 0;
     private boolean alignmentComplete = false;
+
+    private double hoodPositionLUT[] = new double[50];
+
+    class DistanceLUTPair {
+        public double height;
+        public int distance;
+
+        public DistanceLUTPair(double h, int d) {
+            height = h;
+            distance = d;
+        }
+    }
+
+    private ArrayList<DistanceLUTPair> distanceLUT = new ArrayList<DistanceLUTPair>();
 
     /** Creates a new AlignWithTarget. */
     public AlignWithTarget(Turret t, Vision v, Hood h) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_vision = v;
         m_turret = t;
-        m_hood = h ;
+        m_hood = h;
 
         addRequirements(m_turret, m_hood);
 
-        for ( int i = 0 ; i < 10; i++) {
-            hoodPositionLUT[i] = 0.0 ;
+        distanceLUT.add(new DistanceLUTPair(320.0, 8));
+        distanceLUT.add(new DistanceLUTPair(105.0, 8));
+        distanceLUT.add(new DistanceLUTPair(100.0, 9));
+        distanceLUT.add(new DistanceLUTPair(92.0, 10));
+        distanceLUT.add(new DistanceLUTPair(79.5, 11));        
+        distanceLUT.add(new DistanceLUTPair(76.0, 12));        
+        distanceLUT.add(new DistanceLUTPair(72.0, 13));        
+        distanceLUT.add(new DistanceLUTPair(65.0, 14));        
+        distanceLUT.add(new DistanceLUTPair(60.5, 15));        
+        distanceLUT.add(new DistanceLUTPair(56.6, 16));        
+        distanceLUT.add(new DistanceLUTPair(55.5, 17));        
+        distanceLUT.add(new DistanceLUTPair(52.3, 18));        
+        distanceLUT.add(new DistanceLUTPair(51.5, 19));
+        distanceLUT.add(new DistanceLUTPair(49.0, 20));
+        distanceLUT.add(new DistanceLUTPair(0, 20));
+
+        
+
+        for (int i = 0; i < 10; i++) {
+            hoodPositionLUT[i] = 0.0;
         }
-        //wpk need to update this
-        hoodPositionLUT[10] = 1.0 ;
-        hoodPositionLUT[11] = 1.0 ;
-        hoodPositionLUT[12] = 1.0 ;
-        hoodPositionLUT[13] = 1.0 ;
-        hoodPositionLUT[14] = 1.0 ;
-        hoodPositionLUT[15] = 1.0 ;
-        hoodPositionLUT[16] = 1.0 ;
-        hoodPositionLUT[17] = 1.0 ;
-        hoodPositionLUT[18] = 1.0 ;
-        hoodPositionLUT[19] = 1.0 ;
-        hoodPositionLUT[20] = 1.0 ;
-        hoodPositionLUT[21] = 1.0 ;
-        hoodPositionLUT[22] = 1.0 ;
-        hoodPositionLUT[23] = 1.0 ;
-        hoodPositionLUT[24] = 1.0 ;
-        hoodPositionLUT[25] = 1.0 ;
-        hoodPositionLUT[26] = 1.0 ;
-        hoodPositionLUT[27] = 1.0 ;
-        hoodPositionLUT[28] = 1.0 ;
-        hoodPositionLUT[29] = 1.0 ;
-        hoodPositionLUT[30] = 1.0 ;
-        for ( int i = 31 ; i < hoodPositionLUT.length ; i++) {
-            hoodPositionLUT[i] = 0.0 ;
+
+        hoodPositionLUT[8] = 1;
+        hoodPositionLUT[9] = 0.825;
+        hoodPositionLUT[10] = 0.65;
+        hoodPositionLUT[11] = 0.575;
+        hoodPositionLUT[12] = 0.5;
+        hoodPositionLUT[13] = 0.375;
+        hoodPositionLUT[14] = 0.25;
+        hoodPositionLUT[15] = 0.2;
+        hoodPositionLUT[16] = 0.15;
+        hoodPositionLUT[17] = 0.1;
+        hoodPositionLUT[18] = 0.05;
+        hoodPositionLUT[19] = 0.025;
+        hoodPositionLUT[20] = 0.0;
+
+        for (int i = 21; i < hoodPositionLUT.length; i++) {
+            hoodPositionLUT[i] = 0.0;
         }
 
     }
@@ -72,24 +97,22 @@ public class AlignWithTarget extends CommandBase {
         alignmentComplete = false;
     }
 
+    int getDistanceToTarget(double boxHeight) {
+            
+        int returnVal = 0;
 
+        for ( int i = 0; i < distanceLUT.size(); i++) {
+            if ( boxHeight > distanceLUT.get(i).height ) {
+                returnVal = distanceLUT.get(i).distance ;
+                break ;
+            }
+        }
 
-    double getDistanceToTarget( double boxHeight, double boxYPos ) {
-        // add logic here
-        return 10.0 ;
+        return returnVal;
     }
 
-
-    double getHoodPosition(double distanceToTarget) {
-
-        int lowerBound = (int) distanceToTarget ;
-        int upperBound = (int) (distanceToTarget+1.0) ;
-
-        double percentRange = distanceToTarget - lowerBound ;
-
-        // wpk need to finish calculations
-
-        return hoodPositionLUT[lowerBound] ;
+    double getHoodPosition(int distanceToTarget) {
+        return hoodPositionLUT[distanceToTarget] ;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -102,7 +125,7 @@ public class AlignWithTarget extends CommandBase {
         // }
 
         double rotateVelocity = 0.0;
-        double azimuthError = 0.0 ;
+        double azimuthError = 0.0;
 
         if (m_vision.visionTargetIsVisible()) {
             azimuthError = -m_vision.visionTargetDistanceFromCenter();
@@ -114,17 +137,17 @@ public class AlignWithTarget extends CommandBase {
                         * Math.min(Math.abs(adjustment), Constants.ShooterConstants.Turret.maxTurretOutput);
                 rotateVelocity = adjustment;
             }
-            //m_turret.rotate(0.0);
-            //System.out.println("Alignment adjustment is " + rotateVelocity);
+            // m_turret.rotate(0.0);
+            // System.out.println("Alignment adjustment is " + rotateVelocity);
             m_turret.rotateTurret(rotateVelocity);
 
-            //wpk need to update
-//            m_hood.setServoPosition(getHoodPosition(getDistanceToTarget(100.0, 0.2)));
-            m_hood.setServoPosition(0.00);
-
+            // wpk need to update
+            m_hood.setServoPosition(getHoodPosition(getDistanceToTarget(100.0, 0.2)));
+            //m_hood.setServoPosition(0.00);
+        
 
         } else {
-            //System.out.println("Target not visible");
+            // System.out.println("Target not visible");
             missedFrames++;
         }
     }
@@ -138,11 +161,11 @@ public class AlignWithTarget extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false ;
+        return false;
         // if (missedFrames > 10) {
-        //     return true;
+        // return true;
         // } else {
-        //     return false;
+        // return false;
         // }
     }
 }
