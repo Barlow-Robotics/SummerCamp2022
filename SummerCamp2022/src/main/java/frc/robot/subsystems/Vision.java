@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -12,9 +14,10 @@ public class Vision extends SubsystemBase {
 
   boolean targetIsVisible = false;
 
-  public Vision() {
-  }
-
+  public void LookUpTable(){}
+  public ArrayList<Double> lookUpTArrayList;
+  
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

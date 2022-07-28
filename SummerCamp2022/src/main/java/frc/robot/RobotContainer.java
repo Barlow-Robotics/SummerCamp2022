@@ -48,7 +48,7 @@ public class RobotContainer {
   private final Turret m_turret = new Turret();
   private final Hood m_hood = new Hood();
 
-  private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_turret, m_vision);
+  private final AlignWithTarget alignWithTargetCommand = new AlignWithTarget(m_turret, m_vision, m_hood);
   private final AdjustTurretHoodAngle adjustTurretHoodAngleCommand = new AdjustTurretHoodAngle(m_hood);
   //private final RotateTurret rotateTurretCommand = new RotateTurret(m_turret);
   private final StartIndexAndShooter startIndexAndShooterCommand = new StartIndexAndShooter(m_shooter, m_index);
@@ -88,16 +88,17 @@ public class RobotContainer {
                 speed = (Math.abs(x) / x) * (Math.exp(-400.0 * Math.pow(x / 3.0, 4.0)))
                     + (-Math.abs(x) / x);
               }
-              double turn = 0.0;
-              if (yaw != 0) {
-                turn = (Math.abs(yaw) / yaw) * (Math.exp(-400.0 * Math.pow(yaw / 3.0, 4.0)))
-                    + (-Math.abs(yaw) / yaw);
-              }
+              double turn = -yaw ;
+              // double turn = 0.0;
+              // if (yaw != 0) {
+              //   turn = (Math.abs(yaw) / yaw) * (Math.exp(-400.0 * Math.pow(yaw / 3.0, 4.0)))
+              //       + (-Math.abs(yaw) / yaw);
+              // }
               // The turn input results in really quick movement of the bot, so
               // let's reduce the turn input and make it even less if we are going faster
               // This is a simple y = mx + b equation to adjust the turn input based on the
               // speed.
-              turn = turn * (-0.4 * Math.abs(speed) + 0.5);
+              //turn = turn * (-0.4 * Math.abs(speed) + 0.5);
 
               m_drive.drive(-speed, -turn * 0.4, false);
             },

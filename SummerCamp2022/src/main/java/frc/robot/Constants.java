@@ -84,6 +84,7 @@ public final class Constants {
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
             public static final double FlywheelVelocity = 8000 * RPM ;
+//            public static final double FlywheelVelocity = 10000 * RPM ;
         }
 
         public static final double closedVoltageRampingConstant = 0.1;

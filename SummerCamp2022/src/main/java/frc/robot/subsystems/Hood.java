@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,6 +15,8 @@ public class Hood extends SubsystemBase {
     Servo leftServo;
     Servo rightServo;
 
+    // public ArrayList<Double> hoodPositions;
+
     /** Creates a new Hood. */
     public Hood() {
         leftServo = new Servo(Constants.ShooterConstants.Hood.ID_leftServo);
@@ -21,6 +25,7 @@ public class Hood extends SubsystemBase {
         leftServo.enableDeadbandElimination(true);
         rightServo.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
         rightServo.enableDeadbandElimination(true);
+
     }
 
     @Override
