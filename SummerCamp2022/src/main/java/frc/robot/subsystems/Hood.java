@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,6 +12,7 @@ public class Hood extends SubsystemBase {
 
     Servo leftServo;
     Servo rightServo;
+    double currentPosition = 0.5;
 
     // public ArrayList<Double> hoodPositions;
 
@@ -31,10 +30,22 @@ public class Hood extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        leftServo.set(currentPosition);
+        rightServo.set(currentPosition);
     }
 
     public void setServoPosition(double pos) {
-        leftServo.set(pos);
-        rightServo.set(pos);
+        currentPosition = pos;
+    }
+
+    public void movePosition(double deltaPos) {
+        currentPosition = currentPosition + deltaPos;
+        if (currentPosition >= 1) {
+            currentPosition = 1;
+        }
+
+        if (currentPosition <= -1) {
+            currentPosition = -1;
+        }
     }
 }
