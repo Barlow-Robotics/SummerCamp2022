@@ -40,12 +40,12 @@ public class Hood extends SubsystemBase {
 
     public void movePosition(double deltaPos) {
         currentPosition = currentPosition + deltaPos;
-        if (currentPosition >= 1) {
-            currentPosition = 1;
+        if (currentPosition >= 1.0) {
+            currentPosition = 1.0;
         }
 
-        if (currentPosition <= -1) {
-            currentPosition = -1;
+        if (currentPosition <= 0.0) {
+            currentPosition = 0.0;
         }
     }
 }

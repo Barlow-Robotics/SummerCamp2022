@@ -141,9 +141,7 @@ public class AlignWithTarget extends CommandBase {
             // System.out.println("Alignment adjustment is " + rotateVelocity);
             m_turret.rotateTurret(rotateVelocity);
 
-            // wpk need to update
-            m_hood.setServoPosition(getHoodPosition(getDistanceToTarget(100.0, 0.2)));
-            //m_hood.setServoPosition(0.00);
+            m_hood.setServoPosition(getHoodPosition(getDistanceToTarget(m_vision.bbHeight())));
         
 
         } else {
