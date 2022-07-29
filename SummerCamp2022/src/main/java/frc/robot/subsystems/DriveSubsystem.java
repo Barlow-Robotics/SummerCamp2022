@@ -98,10 +98,10 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void setDefaultNeutralMode() {
-        // m_leftLeader.setNeutralMode(NeutralMode.Brake);
-        // m_rightLeader.setNeutralMode(NeutralMode.Brake);
-        m_leftLeader.setNeutralMode(NeutralMode.Coast);
-        m_rightLeader.setNeutralMode(NeutralMode.Coast);
+        m_leftLeader.setNeutralMode(NeutralMode.Brake);
+        m_rightLeader.setNeutralMode(NeutralMode.Brake);
+        // m_leftLeader.setNeutralMode(NeutralMode.Coast);
+        // m_rightLeader.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
