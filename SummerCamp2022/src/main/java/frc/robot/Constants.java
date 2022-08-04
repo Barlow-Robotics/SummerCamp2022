@@ -71,8 +71,10 @@ public final class Constants {
         public static final class Flywheel {
             public static final int ID_Motor = 11;
         
-            public static final double kF = 0.048;
-            public static final double kP = 0.001;
+//            public static final double kF = 0.048;
+            public static final double kF = 0.06;
+            // public static final double kP = 0.001;
+            public static final double kP = 0.005;
             public static final double kI = 0.0;
             public static final double kD = 0.0;
             public static final int PID_id = 0;
@@ -83,7 +85,7 @@ public final class Constants {
             public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
-            public static final double FlywheelVelocity = 8000 * RPM ;
+            public static final double FlywheelVelocity = 7000 * RPM ;
 //            public static final double FlywheelVelocity = 10000 * RPM ;
         }
 
