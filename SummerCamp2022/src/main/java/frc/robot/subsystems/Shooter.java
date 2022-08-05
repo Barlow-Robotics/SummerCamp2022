@@ -6,7 +6,9 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.sim.PhysicsSim;
-
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -21,11 +23,19 @@ public class Shooter extends SubsystemBase {
     boolean isShooting = false;
     boolean simulationInitialized = false;
 
+    DigitalInput blueBot;
+
+
     public Shooter() {
         m_flywheelMotor = new WPI_TalonFX(Constants.ShooterConstants.Flywheel.ID_Motor);
+        blueBot = new DigitalInput(9) ;
 
         setMotorConfig(m_flywheelMotor);
-        m_flywheelMotor.setInverted(TalonFXInvertType.Clockwise);
+        if (blueBot.get()) {
+            m_flywheelMotor.setInverted(TalonFXInvertType.CounterClockwise);
+        } else {
+            m_flywheelMotor.setInverted(TalonFXInvertType.Clockwise);
+        }
     }
 
     public void startShooting() {

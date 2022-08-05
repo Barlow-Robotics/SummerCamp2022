@@ -156,14 +156,7 @@ public class RobotContainer {
     indexAndShooterButton = new JoystickButton(m_operatorController, Constants.Logitech_Dual_Action.Right_Bumper);
 
     alignWithTargetButton.whileHeld(alignWithTargetCommand);
-//    alignWithTargetButton.whenPressed(alignWithTargetCommand).whenReleased(alignWithTargetCommand.cancel());
     indexAndShooterButton.whenPressed(startIndexAndShooterCommand).whenReleased(stopIndexAndShooterCommand);
-
-    // if (m_operatorController.getPOV(0) == 0.0) {
-    //   m_shooter.rotateTurretPos();
-    // } else if (m_operatorController.getPOV(0) == 180.0) {
-    //   m_shooter.rotateTurretNeg();
-    // }
   }
 
   /**
@@ -173,6 +166,7 @@ public class RobotContainer {
    */
   // public Command getAutonomousCommand() {
   //   // An ExampleCommand will run in autonomous
+    
   //   return m_autoCommand;
   // }
 }

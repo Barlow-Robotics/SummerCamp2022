@@ -149,6 +149,7 @@ public class DriveSubsystem extends SubsystemBase {
         NetworkTableInstance.getDefault().getEntry("drive/rot").setDouble(m_leftLeader.getSelectedSensorPosition());
         NetworkTableInstance.getDefault().getEntry("drive/arcadeDrive").setDouble(100.0);
         diffDrive.arcadeDrive(xSpeed, rot, squareInputs);
+//        diffDrive.curvatureDrive(xSpeed, rot, true);
     }
 
     public Pose2d getPose() {
