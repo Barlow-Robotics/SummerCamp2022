@@ -85,7 +85,7 @@ public final class Constants {
             public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
-            public static final double FlywheelVelocity = 3000 * RPM ;
+            public static final double FlywheelVelocity = 6500 * RPM ;
 //            public static final double FlywheelVelocity = 10000 * RPM ;
         }
 
