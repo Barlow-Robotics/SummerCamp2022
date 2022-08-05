@@ -28,8 +28,8 @@ public class Turret extends SubsystemBase {
         setMotorConfig(m_turretMotor);
         m_turretMotor.setInverted(InvertType.InvertMotorOutput);
 
-        leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
-        rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
+        // leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
+        // rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
     }
 
     public void rotateTurret(double rotateVelocity) {
@@ -64,8 +64,10 @@ public class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        NetworkTableInstance.getDefault().getEntry("turret/encoder_position")
-                .setDouble(m_turretMotor.getSelectedSensorPosition());
+        // NetworkTableInstance.getDefault().getEntry("turret/encoder_position")
+        //         .setDouble(m_turretMotor.getSelectedSensorPosition());
+        // System.out.println("Left  Limit Switch pos " + leftLimitSwitch.get()) ;
+        // System.out.println("Right  Limit Switch pos " + rightLimitSwitch.get()) ;
     }
 
     private void setMotorConfig(WPI_TalonSRX motor) {

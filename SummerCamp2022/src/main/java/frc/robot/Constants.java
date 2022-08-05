@@ -72,7 +72,7 @@ public final class Constants {
             public static final int ID_Motor = 11;
         
 //            public static final double kF = 0.048;
-            public static final double kF = 0.06;
+            public static final double kF = 0.059;
             // public static final double kP = 0.001;
             public static final double kP = 0.005;
             public static final double kI = 0.0;
@@ -85,7 +85,7 @@ public final class Constants {
             public static final double UnitsPerFlywheelRotation = UnitsPerMotorRotation / ChainGearRatio ;
 
             public static final double RPM = ChainGearRatio / 60.0 * UnitsPerMotorRotation / 10.0 ;
-            public static final double FlywheelVelocity = 7000 * RPM ;
+            public static final double FlywheelVelocity = 3000 * RPM ;
 //            public static final double FlywheelVelocity = 10000 * RPM ;
         }
 
@@ -101,8 +101,8 @@ public final class Constants {
             public static final double kd = kp * 0.125 ; 
             public static final double AlignmentTolerence = 10.0;
 
-            public static final int ID_LeftLimitSwitch = 9;
-            public static final int ID_RightLimitSwitch = 8;
+            public static final int ID_LeftLimitSwitch = 0;
+            public static final int ID_RightLimitSwitch = 1;
         }
 
         public static class Hood {
