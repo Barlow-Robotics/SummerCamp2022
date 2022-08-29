@@ -97,9 +97,9 @@ public final class Constants {
 
             public static final double maxTurretOutput = 0.15 ; 
             public static final double kp = 0.4 / 160.0 ;  // maximum error. 
-            public static final double ki = 0.005 ; 
+            public static final double ki = 0.010 ; 
             public static final double kd = kp * 0.125 ; 
-            public static final double AlignmentTolerence = 10.0;
+            public static final double AlignmentTolerence = 5.0;
 
             public static final int ID_LeftLimitSwitch = 0;
             public static final int ID_RightLimitSwitch = 1;

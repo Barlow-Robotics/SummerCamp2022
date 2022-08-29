@@ -32,10 +32,10 @@ public class StartIndexAndShooter extends CommandBase {
   public void execute() {
     m_shooter.startShooting();
 
-    if(m_shooter.getFlywheelSpeed() >= (0.95 * Constants.ShooterConstants.Flywheel.FlywheelVelocity)) {
+     if(m_shooter.getFlywheelSpeed() >= (0.95 * Constants.ShooterConstants.Flywheel.FlywheelVelocity)) {
       m_index.startFeeder();
       m_index.startHopper();
-    }
+     }
   }
 
   // Called once the command ends or is interrupted.

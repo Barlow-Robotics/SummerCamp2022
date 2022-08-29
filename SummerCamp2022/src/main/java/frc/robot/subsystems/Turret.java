@@ -28,8 +28,8 @@ public class Turret extends SubsystemBase {
         setMotorConfig(m_turretMotor);
         m_turretMotor.setInverted(InvertType.InvertMotorOutput);
 
-        // leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
-        // rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
+        leftLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_LeftLimitSwitch);
+        rightLimitSwitch = new DigitalInput(Constants.ShooterConstants.Turret.ID_RightLimitSwitch);
     }
 
     public void rotateTurret(double rotateVelocity) {

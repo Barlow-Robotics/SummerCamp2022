@@ -137,17 +137,16 @@ public class AlignWithTarget extends CommandBase {
                         * Math.min(Math.abs(adjustment), Constants.ShooterConstants.Turret.maxTurretOutput);
                 rotateVelocity = adjustment;
             }
-            // m_turret.rotate(0.0);
-            // System.out.println("Alignment adjustment is " + rotateVelocity);
-            m_turret.rotateTurret(rotateVelocity);
 
             m_hood.setServoPosition(getHoodPosition(getDistanceToTarget(m_vision.bbHeight())));
-        
 
         } else {
             // System.out.println("Target not visible");
             missedFrames++;
         }
+            // m_turret.rotate(0.0);
+            // System.out.println("Alignment adjustment is " + rotateVelocity);
+        m_turret.rotateTurret(rotateVelocity);
     }
 
     // Called once the command ends or is interrupted.
