@@ -35,11 +35,18 @@ public class Turret extends SubsystemBase {
     public void rotateTurret(double rotateVelocity) {
         // if the limit switch is hit...
 
-        double output = 0.0 ;
-        if ( rotateVelocity > 0.0 && leftLimitSwitch.get() ) {
-            output = rotateVelocity ;
-        } else if ( rotateVelocity < 0.0 && rightLimitSwitch.get() ) {
-            output = rotateVelocity ;
+        double output = 0.0;
+
+        // if ( rotateVelocity > 0.0 && leftLimitSwitch.get() ) {
+        //     output = rotateVelocity;
+        // } else if ( rotateVelocity < 0.0 && rightLimitSwitch.get() ) {
+        //     output = rotateVelocity;
+        // }
+
+        if ( rotateVelocity > 0.0 && rightLimitSwitch.get() ) {
+            output = rotateVelocity;
+        } else if ( rotateVelocity < 0.0 && leftLimitSwitch.get() ) {
+            output = rotateVelocity;
         }
         m_turretMotor.set(TalonSRXControlMode.PercentOutput, output);
 
@@ -66,8 +73,8 @@ public class Turret extends SubsystemBase {
         // This method will be called once per scheduler run
         // NetworkTableInstance.getDefault().getEntry("turret/encoder_position")
         //         .setDouble(m_turretMotor.getSelectedSensorPosition());
-        // System.out.println("Left  Limit Switch pos " + leftLimitSwitch.get()) ;
-        // System.out.println("Right  Limit Switch pos " + rightLimitSwitch.get()) ;
+        // System.out.println("Left  Limit Switch pos " + leftLimitSwitch.get());
+        // System.out.println("Right  Limit Switch pos " + rightLimitSwitch.get());
     }
 
     private void setMotorConfig(WPI_TalonSRX motor) {
